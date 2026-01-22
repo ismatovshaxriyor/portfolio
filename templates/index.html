@@ -1,367 +1,978 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>ismatov's Portfolio</title>
-        <!-- Favicon-->
-        <link rel="icon" type="png" href="static/images/ismtov.png" />
-        <!-- Custom Google font-->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="static/css/styles.css" rel="stylesheet" />
-    </head>
-    <body class="d-flex flex-column h-100">
-        <main class="flex-shrink-0">
-            <!-- Navigation-->
-            <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
-                <div class="container px-5">
-                    <a class="navbar-brand" href="/">
-                        <img src="static/images/logo-transparent.png" alt="Logo" style="height: 100px; margin-left: 10px; margin-right: 5px; margin-bottom: -10px;">
-                        <span class="fw-bolder text-primary">iSMATOV Group</span>
-                    </a>   
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
-                            <li class="nav-item link-btns"><a class="nav-link" href="/">Home</a></li>
-                            <li class="nav-item link-btns"><a class="nav-link" href="#resume">Resume</a></li>
-                            <li class="nav-item link-btns"><a class="nav-link" href="#projects">Projects</a></li>
-                            <li class="nav-item link-btns"><a class="nav-link" href="#contact">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <!-- Header-->
-            <header class="py-5">
-                <div class="container px-5 pb-5">
-                    <div class="row gx-5 align-items-center">
-                        <div class="col-xxl-5">
-                            <!-- Header text content-->
-                            <div class="text-center text-xxl-start">
-                                <div class="fs-3 fw-light text-muted">WELCOME</div>
-                                <h1 class="display-3 fw-bolder mb-5"><span class="text-gradient d-inline">I'm Ismatov Shahriyor</span></h1>
-                                <div class="badge bg-gradient-primary-to-secondary text-white mb-4"><div class="text-uppercase">Python & Backend Developer &middot; Problem Solver</div></div>
-                                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
-                                    <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" href="#resume">Resume</a>
-                                    <a class="btn btn-outline-dark btn-lg px-5 py-3 fs-6 fw-bolder" href="#projects">Projects</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xxl-7">
-                            <!-- Header profile picture-->
-                            <div class="d-flex justify-content-center mt-5 mt-xxl-0">
-                                <div class="profile bg-gradient-primary-to-secondary">
-                                    <img class="profile-img" src="static/images/profile.png" alt="..." />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <!-- About Section-->
-            <section class="bg-light py-5">
-                <div class="container px-5">
-                    <div class="row gx-5 justify-content-center">
-                        <div class="col-xxl-8">
-                            <div class="text-center my-5">
-                                <h2 class="display-5 fw-bolder"><span class="text-gradient d-inline">About Me</span></h2>
-                                <p class="lead fw-light mb-4">My name is Shahriyor, and I'm 18 years old.</p>
-                                <p class="text-muted">I am currently studying Artificial Intelligence at the National University of Uzbekistan. I am a junior-level backend developer. I can build websites and Telegram bots. I am working hard to take on bigger projects in the future.</p>
-                                <div class="d-flex justify-content-center fs-2 gap-4">
-                                    <a class="link-btns" href="https://t.me/ismatov_shahriyor" target="_blank"><i class="bi bi-telegram"></i></a>
-                                    <a class="link-btns" href="https://www.instagram.com/ismatov_shaxriyor/" target="_blank"><i class="bi bi-instagram"></i></a>
-                                    <a class="link-btns" href="https://github.com/ismatovshaxriyor/" target="_blank"><i class="bi bi-github"></i></a>
-                                    <a class="link-btns" href="https://www.linkedin.com/in/shaxriyor-ismatov-4b59752a9/" target="_blank"><i class="bi bi-linkedin"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
+{% load static %}
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Ismatov Shaxriyor | Backend Developer</title>
+    <meta
+      name="description"
+      content="Premium backend developer portfolio for Ismatov Shaxriyor. Python, Django, FastAPI, Telegram Bots."
+    />
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-950 text-slate-100 font-['Space_Grotesk']">
+    <div class="relative min-h-screen">
+      <div class="pointer-events-none fixed inset-0 overflow-hidden">
+        <div
+          class="absolute -top-40 left-1/2 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-blue-700/30 blur-3xl animate-[pulse_30s_ease-in-out_infinite]"
+        ></div>
+        <div
+          class="absolute top-10 right-[-8rem] h-[26rem] w-[26rem] rounded-full bg-sky-500/20 blur-[120px] animate-[spin_90s_linear_infinite]"
+        ></div>
+        <div
+          class="absolute bottom-[-10rem] left-[-6rem] h-[24rem] w-[24rem] rounded-full bg-indigo-500/20 blur-[110px] animate-[pulse_36s_ease-in-out_infinite]"
+        ></div>
+        <div
+          class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.12),transparent_45%)]"
+        ></div>
+      </div>
 
-        <!-- Resume Section -->
-        <main class="flex-shrink-0" id="resume">
-            <!-- Page Content-->
-            <div class="container px-5 my-5">
-                <div class="text-center mb-5">
-                    <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Resume</span></h1>
-                </div>
-                <div class="row gx-5 justify-content-center">
-                    <div class="col-lg-11 col-xl-9 col-xxl-8">
-                        <!-- Experience Section-->
-                        <section>
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h2 class="text-primary fw-bolder mb-0">Experience</h2>
-                                <!-- Download resume button-->
-                                <!-- Note: Set the link href target to a PDF file within your project-->
-                                <a class="btn btn-primary px-4 py-3" href="#!">
-                                    <div class="d-inline-block bi bi-download me-2"></div>
-                                    Download Resume
-                                </a>
-                            </div>
-                            <!-- Experience Card 1-->
-                            <div class="card shadow border-0 rounded-4 mb-5">
-                                <div class="card-body p-5">
-                                    <div class="row align-items-center gx-5">
-                                        <div class="col text-center text-lg-start mb-4 mb-lg-0">
-                                            <div class="bg-light p-4 rounded-4">
-                                                <div class="text-primary fw-bolder mb-2">2024 - Present</div>
-                                                <div class="small fw-bolder">Backend Developer</div>
-                                                <div class="small text-muted">Freelancer</div>
-                                                <div class="small text-muted">Tashkent</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-8"><div>Currently, I am not working for any company.
-                                            I am active as a freelancer.
-                                            Right now, I am working on small projects to improve my skills.
-                                            In the future, I aim to work at major companies like Google, Amazon, or Microsoft.</div></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <!-- Education Section-->
-                        <section>
-                            <h2 class="text-secondary fw-bolder mb-4">Education</h2>
-                            <!-- Education Card 1-->
-                            <div class="card shadow border-0 rounded-4 mb-5">
-                                <div class="card-body p-5">
-                                    <div class="row align-items-center gx-5">
-                                        <div class="col text-center text-lg-start mb-4 mb-lg-0">
-                                            <div class="bg-light p-4 rounded-4">
-                                                <div class="text-secondary fw-bolder mb-2">2024 - 2028</div>
-                                                <div class="mb-2">
-                                                    <div class="small fw-bolder">National University of Uzbekistan</div>
-                                                    <div class="small text-muted">Tashkent</div>
-                                                </div>
-                                                <div class="fst-italic">
-                                                    <div class="small text-muted">Bachelor's</div>
-                                                    <div class="small text-muted">Artificial Intelligence</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-8"><div>I am currently a first-year student at the Faculty of Mathematics, majoring in Artificial Intelligence, at the National University of Uzbekistan named after Mirzo Ulugbek.
-                                            My studies mainly focus on mathematics, computer science, and artificial intelligence technologies.
-                                            I am passionate about learning modern technologies and building a strong foundation for my future career.</div></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Education Card 2-->
-                        </section>
-                        <!-- Divider-->
-                        <div class="pb-5"></div>
-                        <!-- Skills Section-->
-                        <section>
-                            <!-- Skillset Card-->
-                            <div class="card shadow border-0 rounded-4 mb-5">
-                                <div class="card-body p-5">
-                                    <!-- Professional skills list-->
-                                    <div class="mb-5">
-                                        <div class="d-flex align-items-center mb-4">
-                                            <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 me-3"><i class="bi bi-tools"></i></div>
-                                            <h3 class="fw-bolder mb-0"><span class="text-gradient d-inline">Professional Skills</span></h3>
-                                        </div>
-                                        <div class="row row-cols-1 row-cols-md-3 mb-4">
-                                            <div class="col mb-4 mb-md-0"><div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">Backend Development</div></div>
-                                            <div class="col"><div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">Web Development</div></div>
-                                            <div class="col mb-4 mb-md-0"><div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">Django</div></div>
-                                        </div>
-                                        <div class="row row-cols-1 row-cols-md-3">
-                                            <div class="col mb-4 mb-md-0"><div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">Artificial Intelligence</div></div>
-                                            <div class="col mb-4 mb-md-0"><div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">Network Security</div></div>
-                                            <div class="col"><div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">Telegram API</div></div>
-                                        </div>
-                                    </div>
-                                    <!-- Languages list-->
-                                    <div class="mb-0">
-                                        <div class="d-flex align-items-center mb-4">
-                                            <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 me-3"><i class="bi bi-code-slash"></i></div>
-                                            <h3 class="fw-bolder mb-0"><span class="text-gradient d-inline">Languages</span></h3>
-                                        </div>
-                                        <div class="row row-cols-1 row-cols-md-3 mb-4">
-                                            <div class="col mb-4 mb-md-0"><div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">HTML</div></div>
-                                            <div class="col mb-4 mb-md-0"><div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">CSS</div></div>
-                                            <div class="col"><div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">JavaScript</div></div>
-                                        </div>
-                                        <div class="row row-cols-1 row-cols-md-3">
-                                            <div class="col mb-4 mb-md-0"><div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">Python</div></div>
-                                            <div class="col mb-4 mb-md-0"><div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">SQL</div></div>
-                                            <div class="col"><div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">Node.js</div></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
+      <header
+        class="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-slate-950/70 backdrop-blur"
+      >
+        <div
+          class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4"
+        >
+          <div class="flex items-center gap-3">
+            <div
+              class="h-10 w-10 rounded-2xl bg-gradient-to-br from-blue-600 via-sky-500 to-cyan-400 p-[1px]"
+            >
+              <div
+                class="flex h-full w-full items-center justify-center rounded-2xl bg-slate-950 p-1"
+              >
+                <img
+                  src="{% static 'images/logo-transparent.png' %}"
+                  alt="Ismatov logo"
+                  class="h-full w-full object-contain"
+                  decoding="async"
+                />
+              </div>
             </div>
-        </main>
-
-        <!-- Projects Section -->>
-        <main class="flex-shrink-0" id="projects">
-            <!-- Projects Section-->
-            <section class="py-5">
-                <div class="container px-5 mb-5">
-                    <div class="text-center mb-5">
-                        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Projects</span></h1>
-                    </div>
-                    <div class="row gx-5 justify-content-center">
-                        <div class="col-lg-11 col-xl-9 col-xxl-8">
-                            <!-- Project Card 1-->
-                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
-                                <div class="card-body p-0">
-                                    <div class="d-flex align-items-center">
-                                        <div class="p-5">
-                                            <h2 class="fw-bolder">AI Chatbot</h2>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius at enim eum illum aperiam placeat esse? Mollitia omnis minima saepe recusandae libero, iste ad asperiores! Explicabo commodi quo itaque! Ipsam!</p>
-                                        </div>
-                                        <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="..." />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="team-section">
-                <div class="container px-5">
-                    <div class="text-center">
-                        <h2 class="team-title">OUR TEAM</h2>
-                        <div class="line"></div>
-                        <div class="line line2"></div>
-                    </div>
-                    <div class="team-member">
-                        <img src="static/images/teamer.jpeg" alt="Team Member">
-                        <div class="member-info">
-                            <h4>Bekzod Ubaydullayev</h4>
-                            <p class="role">Flutter Developer</p>
-                            <p>Main areas: Mobile application development based on Flutter/Dart Working with RESTful API and WebSocket State Management (Provider, Riverpod, BLoC) Working with databases such as Firebase, SQLite, Hive CI/CD and automated testing<br></p>
-                            <div class="d-flex fs-2 gap-4">
-                                <a class="link-btns" href="https://t.me/Ubaydullayeww" target="_blank"><i class="bi bi-telegram"></i></a>
-                                <a class="link-btns" href="https://www.instagram.com/ubaydullayeww/" target="_blank"><i class="bi bi-instagram"></i></a>
-                                <a class="link-btns" href="https://github.com/Ubaydullayeww" target="_blank"><i class="bi bi-github"></i></a>
-                                <a class="link-btns" href="/" target="_blank"><i class="bi bi-linkedin"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-
-            <!-- Call to action section-->
-            <section class="py-5 bg-gradient-primary-to-secondary text-white">
-                <div class="container px-5 my-5">
-                    <div class="text-center">
-                        <h2 class="display-4 fw-bolder mb-4">Let's build something together</h2>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Contact Section-->
-        <main class="flex-shrink-0" id="contact">
-            <section class="py-5">
-                <div class="container px-5">
-                    <div class="bg-light rounded-4 py-5 px-4 px-md-5">
-                        <div class="text-center mb-5">
-                            <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
-                            <h1 class="fw-bolder">Get in touch</h1>
-                            <p class="lead fw-normal text-muted mb-0">Let's work together!</p>
-                        </div>
-                        <div class="row gx-5 justify-content-center">
-                            <div class="col-lg-8 col-xl-6">
-                                <!-- Contact Form -->
-                                <form id="contactForm">
-                                    {% csrf_token %}
-                                    <div id="alertBox"></div> <!-- Xabarlar shu yerda chiqadi -->
-
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="name" name="name" type="text" placeholder="Ismingiz" required>
-                                        <label for="name">Full name</label>
-                                    </div>
-
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="email" name="email" type="email" placeholder="Email manzilingiz" required>
-                                        <label for="email">Email address</label>
-                                    </div>
-
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="phone" name="phone" type="tel" placeholder="Telefon raqamingiz" required>
-                                        <label for="phone">Phone number</label>
-                                    </div>
-
-                                    <div class="form-floating mb-3">
-                                        <textarea class="form-control" id="message" name="message" placeholder="Xabaringizni yozing" style="height: 10rem" required></textarea>
-                                        <label for="message">Message</label>
-                                    </div>
-
-                                    <div class="d-grid">
-                                        <button class="btn btn-primary btn-lg" type="submit">Yuborish</button>
-                                    </div>
-                                </form>
-
-                                <!-- JavaScript kodi -->
-                                <script>
-                                document.getElementById('contactForm').addEventListener('submit', function(e) {
-                                    e.preventDefault(); // Formaning odatiy submitini to'xtatamiz
-
-                                    const form = e.target;
-                                    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                                    const formData = new FormData(form);
-
-                                    fetch('', { // Hozirgi URLga yuboradi
-                                        method: 'POST',
-                                        headers: {
-                                            'X-CSRFToken': csrfToken,
-                                        },
-                                        body: formData
-                                    })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        const alertBox = document.getElementById('alertBox');
-                                        if (data.success) {
-                                            alertBox.innerHTML = `<div class="alert alert-success" role="alert">${data.message}</div>`;
-                                            form.reset(); // Forma inputlarini tozalaymiz
-                                        } else {
-                                            alertBox.innerHTML = `<div class="alert alert-danger" role="alert">${data.message}</div>`;
-                                        }
-                                    })
-                                    .catch(error => {
-                                        console.error('Xatolik:', error);
-                                    });
-                                });
-                                </script>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Footer-->
-        <footer class="bg-white py-4 mt-auto">
-            <div class="container px-5">
-                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-                    <div class="col-auto"><div class="small m-0">Copyright &copy; Your Website 2025</div></div>
-                    <div class="col-auto">
-                        <a class="small" href="#!">Privacy</a>
-                        <span class="mx-1">&middot;</span>
-                        <a class="small" href="#!">Terms</a>
-                    </div>
-                </div>
+            <div>
+              <p class="text-sm uppercase tracking-[0.3em] text-slate-400">
+                Portfolio
+              </p>
+              <p class="text-lg font-semibold text-slate-100">
+                Ismatov Shaxriyor
+              </p>
             </div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-        <!-- Core theme JS-->
-        <script src="static/js/scripts.js"></script>
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-    </body>
+          </div>
+          <nav class="hidden items-center gap-6 text-sm text-slate-300 md:flex">
+            <a href="#home" class="transition duration-500 ease-out hover:text-sky-300">Home</a>
+            <a href="#about" class="transition duration-500 ease-out hover:text-sky-300">About</a>
+            <a href="#skills" class="transition duration-500 ease-out hover:text-sky-300">Skills</a>
+            <a href="#projects" class="transition duration-500 ease-out hover:text-sky-300">Projects</a>
+            <a href="#contact" class="transition duration-500 ease-out hover:text-sky-300">Contact</a>
+          </nav>
+          <a
+            href="#contact"
+            class="rounded-full border border-sky-400/40 bg-sky-500/10 px-4 py-2 text-sm font-medium text-sky-200 transition duration-500 ease-out hover:border-sky-300 hover:bg-sky-500/20"
+          >
+            Let's Connect
+          </a>
+        </div>
+      </header>
+
+      <main
+        class="relative z-10 mx-auto max-w-6xl space-y-24 px-6 pb-20 pt-28"
+      >
+        <section
+          id="home"
+          class="grid items-center gap-12 md:grid-cols-[1.1fr_0.9fr]"
+        >
+          <div
+            data-animate
+            class="space-y-6 opacity-0 translate-y-6 transition duration-[1100ms] ease-out"
+          >
+            <p class="text-xs uppercase tracking-[0.4em] text-slate-400">
+              Backend Developer
+            </p>
+            <h1
+              class="relative min-h-[14.5rem] text-4xl font-semibold leading-tight text-slate-100 md:text-6xl md:leading-tight font-['Playfair_Display']"
+            >
+              <span
+                id="typed-text"
+                class="bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-500 bg-clip-text text-transparent"
+              >
+                Hi everyone, I'm&nbsp;Shaxriyor
+              </span>
+              <span
+                id="typed-cursor"
+                class="pointer-events-none absolute left-0 top-0 w-0 border-l-2 border-sky-200/80 animate-[pulse_5s_ease-in-out_infinite]"
+                aria-hidden="true"
+              ></span>
+            </h1>
+            <p class="text-lg text-slate-300">
+              I design premium backends, secure APIs, and automation layers that
+              feel invisible and unstoppable. Focused on performance, clarity,
+              and human-centered reliability.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a
+                href="#projects"
+                class="rounded-full bg-gradient-to-r from-blue-600 to-sky-500 px-6 py-3 text-sm font-semibold text-white transition duration-500 ease-out hover:-translate-y-0.5 hover:shadow-[0_15px_40px_rgba(56,189,248,0.25)]"
+              >
+                View Projects
+              </a>
+              <a
+                href="#contact"
+                class="rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-slate-100 transition duration-500 ease-out hover:border-sky-400/60 hover:text-sky-200"
+              >
+                Start a Conversation
+              </a>
+            </div>
+            <div class="flex flex-wrap gap-4 pt-4">
+              <div
+                class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur"
+              >
+                <p class="text-2xl font-semibold text-slate-100">25+</p>
+                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">
+                  APIs Built
+                </p>
+              </div>
+              <div
+                class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur"
+              >
+                <p class="text-2xl font-semibold text-slate-100">40+</p>
+                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">
+                  Bot Automations
+                </p>
+              </div>
+              <div
+                class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur"
+              >
+                <p class="text-2xl font-semibold text-slate-100">99.9%</p>
+                <p class="text-xs uppercase tracking-[0.25em] text-slate-400">
+                  Uptime Focus
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-animate
+            class="opacity-0 translate-y-6 transition duration-[1100ms] ease-out delay-150"
+          >
+            <div
+              class="rounded-[28px] border border-white/10 bg-white/5 p-8 shadow-[0_20px_60px_rgba(15,23,42,0.7)] backdrop-blur"
+            >
+              <div class="flex items-center justify-between">
+                <p class="text-sm text-slate-300">Current Focus</p>
+                <span
+                  class="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 text-xs text-emerald-200"
+                >
+                  Open to collaboration
+                </span>
+              </div>
+              <h2 class="mt-6 text-2xl font-semibold text-slate-100">
+                Ismatov Shaxriyor
+              </h2>
+              <p class="mt-2 text-slate-300">
+                2nd year student at National University of Uzbekistan, Faculty
+                of Applied Mathematics and Intelligent Technologies, Artificial
+                Intelligence specialization.
+              </p>
+              <div class="mt-6 grid gap-4">
+                <div
+                  class="flex items-start gap-3 rounded-2xl border border-white/10 bg-slate-900/60 p-4"
+                >
+                  <div class="mt-1 h-2 w-2 rounded-full bg-sky-400"></div>
+                  <p class="text-sm text-slate-300">
+                    Scalable API architecture and clean data contracts
+                  </p>
+                </div>
+                <div
+                  class="flex items-start gap-3 rounded-2xl border border-white/10 bg-slate-900/60 p-4"
+                >
+                  <div class="mt-1 h-2 w-2 rounded-full bg-sky-400"></div>
+                  <p class="text-sm text-slate-300">
+                    Automation-first workflows and bot ecosystems
+                  </p>
+                </div>
+                <div
+                  class="flex items-start gap-3 rounded-2xl border border-white/10 bg-slate-900/60 p-4"
+                >
+                  <div class="mt-1 h-2 w-2 rounded-full bg-sky-400"></div>
+                  <p class="text-sm text-slate-300">
+                    Security-minded systems with measurable uptime
+                  </p>
+                </div>
+              </div>
+              <div class="mt-6 flex items-center gap-4">
+                <div
+                  class="h-12 w-12 rounded-full bg-gradient-to-br from-slate-800 to-slate-950"
+                ></div>
+                <div>
+                  <p class="text-sm text-slate-400">Tech Stack</p>
+                  <p class="text-sm font-semibold text-slate-100">
+                    Python / Django / FastAPI / Telegram Bots
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="about"
+          class="scroll-mt-24 rounded-[28px] border border-white/10 bg-slate-900/40 p-10 backdrop-blur"
+        >
+          <div class="grid gap-8 md:grid-cols-[1fr_1fr]">
+            <div
+              data-animate
+              class="space-y-4 opacity-0 translate-y-6 transition duration-[1100ms] ease-out"
+            >
+              <div class="flex items-center gap-4">
+                <img
+                  src="{% static 'images/logo.png' %}"
+                  alt="Ismatov mark"
+                  class="h-12 w-auto opacity-80"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <p class="text-xs uppercase tracking-[0.4em] text-slate-400">
+                  About Me
+                </p>
+              </div>
+              <h2 class="text-3xl font-semibold text-slate-100">
+                Backends that feel effortless to use and impossible to break.
+              </h2>
+              <p class="text-slate-300">
+                My name is Shahriyor, and I'm 18 years old. I am a junior-level
+                backend developer who can build websites and Telegram bots.
+              </p>
+              <p class="text-slate-300">
+                I am currently studying Artificial Intelligence at the National
+                University of Uzbekistan, and I am working hard to take on
+                bigger projects in the future.
+              </p>
+            </div>
+            <div
+              data-animate
+              class="grid gap-4 opacity-0 translate-y-6 transition duration-[1100ms] ease-out delay-100"
+            >
+              <div
+                class="rounded-2xl border border-white/10 bg-slate-950/70 p-5"
+              >
+                <p class="text-sm uppercase tracking-[0.3em] text-slate-400">
+                  Education
+                </p>
+                <p class="mt-2 text-sm text-slate-200">
+                  Faculty of Mathematics, Artificial Intelligence, National
+                  University of Uzbekistan (Mirzo Ulugbek).
+                </p>
+              </div>
+              <div
+                class="rounded-2xl border border-white/10 bg-slate-950/70 p-5"
+              >
+                <p class="text-sm uppercase tracking-[0.3em] text-slate-400">
+                  Mission
+                </p>
+                <p class="mt-2 text-sm text-slate-200">
+                  Deliver premium backend experiences that are secure, elegant,
+                  and reliable.
+                </p>
+              </div>
+              <div
+                class="rounded-2xl border border-white/10 bg-slate-950/70 p-5"
+              >
+                <p class="text-sm uppercase tracking-[0.3em] text-slate-400">
+                  Passion
+                </p>
+                <p class="mt-2 text-sm text-slate-200">
+                  Designing systems that empower teams to ship faster with
+                  confidence.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="skills" class="scroll-mt-24 space-y-8">
+          <div
+            data-animate
+            class="space-y-3 opacity-0 translate-y-6 transition duration-[1100ms] ease-out"
+          >
+            <p class="text-xs uppercase tracking-[0.4em] text-slate-400">
+              Skills
+            </p>
+            <h2 class="text-3xl font-semibold text-slate-100">
+              Deep technical focus with a premium delivery mindset.
+            </h2>
+            <p class="text-slate-300">
+              Focused on backend craftsmanship across Python frameworks and
+              automation tooling.
+            </p>
+          </div>
+          <div class="grid gap-6 md:grid-cols-2">
+            <div
+              data-animate data-hover
+              class="rounded-[24px] border border-white/10 bg-white/5 p-6 backdrop-blur transition duration-[1100ms] ease-in-out opacity-0 translate-y-6 delay-100 hover:-translate-y-0.5 hover:border-sky-300/40 hover:bg-white/10 hover:shadow-[0_18px_40px_rgba(14,165,233,0.15)]"
+            >
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-semibold text-slate-100">Python</h3>
+                <span class="text-sm text-slate-400">92%</span>
+              </div>
+              <p class="mt-2 text-sm text-slate-300">
+                Automation, async services, data tooling
+              </p>
+              <div class="mt-4 h-2 w-full rounded-full bg-white/10">
+                <div
+                  class="h-full w-[92%] rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-600"
+                ></div>
+              </div>
+            </div>
+            <div
+              data-animate data-hover
+              class="rounded-[24px] border border-white/10 bg-white/5 p-6 backdrop-blur transition duration-[1100ms] ease-in-out opacity-0 translate-y-6 delay-150 hover:-translate-y-0.5 hover:border-sky-300/40 hover:bg-white/10 hover:shadow-[0_18px_40px_rgba(14,165,233,0.15)]"
+            >
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-semibold text-slate-100">Django</h3>
+                <span class="text-sm text-slate-400">95%</span>
+              </div>
+              <p class="mt-2 text-sm text-slate-300">
+                Robust backends, admin systems, ORM
+              </p>
+              <div class="mt-4 h-2 w-full rounded-full bg-white/10">
+                <div
+                  class="h-full w-[86%] rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-600"
+                ></div>
+              </div>
+            </div>
+            <div
+              data-animate data-hover
+              class="rounded-[24px] border border-white/10 bg-white/5 p-6 backdrop-blur transition duration-[1100ms] ease-in-out opacity-0 translate-y-6 delay-150 hover:-translate-y-0.5 hover:border-sky-300/40 hover:bg-white/10 hover:shadow-[0_18px_40px_rgba(14,165,233,0.15)]"
+            >
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-semibold text-slate-100">FastAPI</h3>
+                <span class="text-sm text-slate-400">80%</span>
+              </div>
+              <p class="mt-2 text-sm text-slate-300">
+                High-performance APIs, typed contracts
+              </p>
+              <div class="mt-4 h-2 w-full rounded-full bg-white/10">
+                <div
+                  class="h-full w-[90%] rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-600"
+                ></div>
+              </div>
+            </div>
+            <div
+              data-animate data-hover
+              class="rounded-[24px] border border-white/10 bg-white/5 p-6 backdrop-blur transition duration-[1100ms] ease-in-out opacity-0 translate-y-6 delay-200 hover:-translate-y-0.5 hover:border-sky-300/40 hover:bg-white/10 hover:shadow-[0_18px_40px_rgba(14,165,233,0.15)]"
+            >
+              <div class="flex items-center justify-between">
+                <h3 class="text-xl font-semibold text-slate-100">
+                  Telegram Bots
+                </h3>
+                <span class="text-sm text-slate-400">90%</span>
+              </div>
+              <p class="mt-2 text-sm text-slate-300">
+                Conversational flows, payment bots
+              </p>
+              <div class="mt-4 h-2 w-full rounded-full bg-white/10">
+                <div
+                  class="h-full w-[88%] rounded-full bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-600"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="projects" class="scroll-mt-24 space-y-8">
+          <div
+            data-animate
+            class="space-y-3 opacity-0 translate-y-6 transition duration-[1100ms] ease-out"
+          >
+            <p class="text-xs uppercase tracking-[0.4em] text-slate-400">
+              Projects
+            </p>
+            <h2 class="text-3xl font-semibold text-slate-100">
+              Premium backend solutions with room to scale.
+            </h2>
+            <p class="text-slate-300">
+              A curated set of backend-focused projects. Replace the visuals and
+              descriptions with real case studies when ready.
+            </p>
+          </div>
+          <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div
+              data-animate data-hover
+              class="group rounded-[26px] border border-white/10 bg-slate-900/60 p-5 transition duration-[1100ms] ease-in-out opacity-0 translate-y-6 delay-100 hover:-translate-y-0.5 hover:border-sky-300/40 hover:bg-slate-900/75 hover:shadow-[0_20px_50px_rgba(14,165,233,0.12)]"
+            >
+              <div
+                class="overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-950 to-blue-900/40"
+              >
+                <div
+                  class="flex aspect-[16/10] items-center justify-center bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.15),transparent_60%)]"
+                >
+                  <span class="text-xs uppercase tracking-[0.4em] text-slate-400"
+                    >Placeholder</span
+                  >
+                </div>
+              </div>
+              <div class="mt-5 space-y-3">
+                <h3
+                  class="text-xl font-semibold text-slate-100 transition duration-500 ease-in-out group-hover:text-sky-200"
+                >
+                  Nebula Ledger
+                </h3>
+                <p class="text-sm text-slate-300">
+                  A secure billing engine with real-time invoice pipelines and
+                  smart retries.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >FastAPI</span
+                  >
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >PostgreSQL</span
+                  >
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >Redis</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              data-animate data-hover
+              class="group rounded-[26px] border border-white/10 bg-slate-900/60 p-5 transition duration-[1100ms] ease-in-out opacity-0 translate-y-6 delay-150 hover:-translate-y-0.5 hover:border-sky-300/40 hover:bg-slate-900/75 hover:shadow-[0_20px_50px_rgba(14,165,233,0.12)]"
+            >
+              <div
+                class="overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-950 to-blue-900/40"
+              >
+                <div
+                  class="flex aspect-[16/10] items-center justify-center bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.15),transparent_60%)]"
+                >
+                  <span class="text-xs uppercase tracking-[0.4em] text-slate-400"
+                    >Placeholder</span
+                  >
+                </div>
+              </div>
+              <div class="mt-5 space-y-3">
+                <h3
+                  class="text-xl font-semibold text-slate-100 transition duration-500 ease-in-out group-hover:text-sky-200"
+                >
+                  Orion Dispatch
+                </h3>
+                <p class="text-sm text-slate-300">
+                  Queue-driven microservice for automated alerts and critical
+                  notification routing.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >Django</span
+                  >
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >Celery</span
+                  >
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >RabbitMQ</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              data-animate data-hover
+              class="group rounded-[26px] border border-white/10 bg-slate-900/60 p-5 transition duration-[1100ms] ease-in-out opacity-0 translate-y-6 delay-200 hover:-translate-y-0.5 hover:border-sky-300/40 hover:bg-slate-900/75 hover:shadow-[0_20px_50px_rgba(14,165,233,0.12)]"
+            >
+              <div
+                class="overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-950 to-blue-900/40"
+              >
+                <div
+                  class="flex aspect-[16/10] items-center justify-center bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.15),transparent_60%)]"
+                >
+                  <span class="text-xs uppercase tracking-[0.4em] text-slate-400"
+                    >Placeholder</span
+                  >
+                </div>
+              </div>
+              <div class="mt-5 space-y-3">
+                <h3
+                  class="text-xl font-semibold text-slate-100 transition duration-500 ease-in-out group-hover:text-sky-200"
+                >
+                  Aurora Pulse
+                </h3>
+                <p class="text-sm text-slate-300">
+                  Telemetry API suite for AI-ready analytics and event
+                  synchronization.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >Python</span
+                  >
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >Kafka</span
+                  >
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >ClickHouse</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              data-animate data-hover
+              class="group rounded-[26px] border border-white/10 bg-slate-900/60 p-5 transition duration-[1100ms] ease-in-out opacity-0 translate-y-6 delay-100 hover:-translate-y-0.5 hover:border-sky-300/40 hover:bg-slate-900/75 hover:shadow-[0_20px_50px_rgba(14,165,233,0.12)]"
+            >
+              <div
+                class="overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-950 to-blue-900/40"
+              >
+                <div
+                  class="flex aspect-[16/10] items-center justify-center bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.15),transparent_60%)]"
+                >
+                  <span class="text-xs uppercase tracking-[0.4em] text-slate-400"
+                    >Placeholder</span
+                  >
+                </div>
+              </div>
+              <div class="mt-5 space-y-3">
+                <h3
+                  class="text-xl font-semibold text-slate-100 transition duration-500 ease-in-out group-hover:text-sky-200"
+                >
+                  Atlas Bot Studio
+                </h3>
+                <p class="text-sm text-slate-300">
+                  Telegram automation platform with onboarding flows and payment
+                  hooks.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >Telegram</span
+                  >
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >FastAPI</span
+                  >
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >Stripe</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              data-animate data-hover
+              class="group rounded-[26px] border border-white/10 bg-slate-900/60 p-5 transition duration-[1100ms] ease-in-out opacity-0 translate-y-6 delay-150 hover:-translate-y-0.5 hover:border-sky-300/40 hover:bg-slate-900/75 hover:shadow-[0_20px_50px_rgba(14,165,233,0.12)]"
+            >
+              <div
+                class="overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-950 to-blue-900/40"
+              >
+                <div
+                  class="flex aspect-[16/10] items-center justify-center bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.15),transparent_60%)]"
+                >
+                  <span class="text-xs uppercase tracking-[0.4em] text-slate-400"
+                    >Placeholder</span
+                  >
+                </div>
+              </div>
+              <div class="mt-5 space-y-3">
+                <h3
+                  class="text-xl font-semibold text-slate-100 transition duration-500 ease-in-out group-hover:text-sky-200"
+                >
+                  Signal Harbor
+                </h3>
+                <p class="text-sm text-slate-300">
+                  Observability dashboard backend with secure auth and usage
+                  analytics.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >Django</span
+                  >
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >PostgreSQL</span
+                  >
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >JWT</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              data-animate data-hover
+              class="group rounded-[26px] border border-white/10 bg-slate-900/60 p-5 transition duration-[1100ms] ease-in-out opacity-0 translate-y-6 delay-200 hover:-translate-y-0.5 hover:border-sky-300/40 hover:bg-slate-900/75 hover:shadow-[0_20px_50px_rgba(14,165,233,0.12)]"
+            >
+              <div
+                class="overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900 via-slate-950 to-blue-900/40"
+              >
+                <div
+                  class="flex aspect-[16/10] items-center justify-center bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.15),transparent_60%)]"
+                >
+                  <span class="text-xs uppercase tracking-[0.4em] text-slate-400"
+                    >Placeholder</span
+                  >
+                </div>
+              </div>
+              <div class="mt-5 space-y-3">
+                <h3
+                  class="text-xl font-semibold text-slate-100 transition duration-500 ease-in-out group-hover:text-sky-200"
+                >
+                  Echo Relay
+                </h3>
+                <p class="text-sm text-slate-300">
+                  Webhook relayer for third-party platforms with traceable audit
+                  logs.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >Python</span
+                  >
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >FastAPI</span
+                  >
+                  <span
+                    class="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs text-sky-200"
+                    >S3</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <section id="contact" class="scroll-mt-24 space-y-10">
+          <div
+            data-animate
+            class="space-y-3 opacity-0 translate-y-6 transition duration-[1100ms] ease-out"
+          >
+            <p class="text-xs uppercase tracking-[0.4em] text-slate-400">
+              Contact Me
+            </p>
+            <h2 class="text-3xl font-semibold text-slate-100">
+              Let's build something unforgettable.
+            </h2>
+            <p class="text-slate-300">
+              Tell me about your product vision, and I'll craft the backend
+              architecture to bring it to life.
+            </p>
+          </div>
+
+          <div class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+            <form
+              class="space-y-4 rounded-[28px] border border-white/10 bg-slate-900/60 p-8 backdrop-blur opacity-0 translate-y-6 transition duration-[1100ms] ease-out"
+              data-animate id="contactForm"
+              method="post"
+              action="{% url 'index' %}"
+            >
+            {% csrf_token %}
+              <div
+                id="alertBox"
+                class="hidden rounded-2xl border px-4 py-3 text-sm"
+                role="status"
+                aria-live="polite"
+              ></div>
+              <div class="grid gap-4 md:grid-cols-2">
+                <div class="space-y-2">
+                  <label class="text-xs uppercase tracking-[0.3em] text-slate-400"
+                    >Name</label
+                  >
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Your full name"
+                    required
+                    class="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-slate-100 outline-none transition duration-500 ease-out focus:border-sky-400/70 focus:ring-2 focus:ring-sky-500/30"
+                  />
+                </div>
+                <div class="space-y-2">
+                  <label class="text-xs uppercase tracking-[0.3em] text-slate-400"
+                    >Email</label
+                  >
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="you@email.com"
+                    required
+                    class="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-slate-100 outline-none transition duration-500 ease-out focus:border-sky-400/70 focus:ring-2 focus:ring-sky-500/30"
+                  />
+                </div>
+                <div class="space-y-2 md:col-span-2">
+                  <label class="text-xs uppercase tracking-[0.3em] text-slate-400"
+                    >Phone</label
+                  >
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="+998 90 123 45 67"
+                    required
+                    class="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-slate-100 outline-none transition duration-500 ease-out focus:border-sky-400/70 focus:ring-2 focus:ring-sky-500/30"
+                  />
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="text-xs uppercase tracking-[0.3em] text-slate-400"
+                  >Project Summary</label
+                >
+                <textarea
+                  rows="5"
+                  name="message"
+                  placeholder="Share your goals, timeline, and scale."
+                  required
+                  class="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-slate-100 outline-none transition duration-500 ease-out focus:border-sky-400/70 focus:ring-2 focus:ring-sky-500/30"
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="w-full rounded-full bg-gradient-to-r from-blue-600 to-sky-500 px-6 py-3 text-sm font-semibold text-white transition duration-500 ease-out hover:-translate-y-0.5 hover:shadow-[0_15px_40px_rgba(56,189,248,0.25)] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                Send Message
+              </button>
+            </form>
+
+            <div class="space-y-6">
+              <div
+                data-animate data-hover
+                class="rounded-[28px] border border-white/10 bg-slate-900/60 p-8 backdrop-blur opacity-0 translate-y-6 transition duration-[1100ms] ease-out delay-100 hover:-translate-y-1 hover:border-sky-400/40"
+              >
+                <p class="text-sm uppercase tracking-[0.3em] text-slate-400">
+                  Social Presence
+                </p>
+                <p class="mt-3 text-slate-300">
+                  Connect with me for collaboration, mentorship, or new project
+                  ideas.
+                </p>
+                <div class="mt-6 flex flex-wrap gap-3">
+                  <a
+                    href="https://github.com/ismatovshaxriyor/"
+                    aria-label="GitHub"
+                    class="flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/70 px-4 py-2 text-sm text-slate-200 transition duration-500 ease-out hover:border-sky-400/60 hover:text-sky-200"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      class="h-4 w-4 fill-current"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M12 2.2c-5.5 0-10 4.6-10 10.2 0 4.5 2.9 8.2 6.9 9.6.5.1.7-.2.7-.5v-2c-2.8.6-3.4-1.2-3.4-1.2-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.4 1.1 3 .8.1-.7.4-1.1.7-1.4-2.2-.3-4.5-1.2-4.5-5.1 0-1.1.4-2.1 1-2.8-.1-.3-.4-1.4.1-2.9 0 0 .9-.3 3 .9.9-.3 1.9-.4 2.8-.4s1.9.1 2.8.4c2.1-1.2 3-.9 3-.9.5 1.5.2 2.6.1 2.9.6.7 1 1.7 1 2.8 0 3.9-2.3 4.8-4.5 5.1.4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 4-1.4 6.9-5.1 6.9-9.6 0-5.6-4.5-10.2-10-10.2Z"
+                      ></path>
+                    </svg>
+                    GitHub
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/shaxriyor-ismatov-4b59752a9/"
+                    aria-label="LinkedIn"
+                    class="flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/70 px-4 py-2 text-sm text-slate-200 transition duration-500 ease-out hover:border-sky-400/60 hover:text-sky-200"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      class="h-4 w-4 fill-current"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M4.8 3.5c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2ZM.8 7h4v12.5h-4V7Zm6.6 0h3.8v1.7h.1c.5-1 1.7-2 3.6-2 3.9 0 4.6 2.6 4.6 5.9v6.9h-4v-6.1c0-1.4 0-3.2-2-3.2s-2.3 1.6-2.3 3.1v6.2h-4V7Z"
+                      ></path>
+                    </svg>
+                    LinkedIn
+                  </a>
+                  <a
+                    href="https://t.me/ismatov_shahriyor"
+                    aria-label="Telegram"
+                    class="flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/70 px-4 py-2 text-sm text-slate-200 transition duration-500 ease-out hover:border-sky-400/60 hover:text-sky-200"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      class="h-4 w-4 fill-current"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M19.6 4.4 2.7 10.9c-1.1.4-1.1 1.4-.2 1.7l4.3 1.4 1.7 5.1c.2.6.4.8.8.8.4 0 .6-.2.9-.5l2.4-2.4 5 3.7c.9.5 1.5.2 1.7-.9l2.9-13.6c.3-1.3-.5-1.9-1.4-1.6Zm-3.3 4.5-7.4 6.7-.3 3.2-1.4-4.5 9.5-5.4c.5-.3.9.1-.4 1Z"
+                      ></path>
+                    </svg>
+                    Telegram
+                  </a>
+                  <a
+                    href="https://www.instagram.com/ismatov_shaxriyor/"
+                    aria-label="Instagram"
+                    class="flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/70 px-4 py-2 text-sm text-slate-200 transition duration-500 ease-out hover:border-sky-400/60 hover:text-sky-200"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      class="h-4 w-4 fill-current"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M12 7.3A4.7 4.7 0 1 0 16.7 12 4.7 4.7 0 0 0 12 7.3Zm0 7.7A3 3 0 1 1 15 12 3 3 0 0 1 12 15Zm6-7.9a1.1 1.1 0 1 1-1.1-1.1 1.1 1.1 0 0 1 1.1 1.1Zm3.1 1.1a5.3 5.3 0 0 0-1.4-3.7 5.3 5.3 0 0 0-3.7-1.4C14.9 3 9.1 3 8 3.1a5.3 5.3 0 0 0-3.7 1.4 5.3 5.3 0 0 0-1.4 3.7C2.9 9.1 2.9 14.9 3 16a5.3 5.3 0 0 0 1.4 3.7 5.3 5.3 0 0 0 3.7 1.4c1.1.1 6.9.1 8 0a5.3 5.3 0 0 0 3.7-1.4 5.3 5.3 0 0 0 1.4-3.7c.1-1.1.1-6.9 0-8Z"
+                      ></path>
+                    </svg>
+                    Instagram
+                  </a>
+                </div>
+              </div>
+              <div
+                data-animate data-hover
+                class="rounded-[28px] border border-white/10 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-900/40 p-8 opacity-0 translate-y-6 transition duration-[1100ms] ease-out delay-150 hover:-translate-y-1 hover:border-sky-400/40"
+              >
+                <p class="text-sm uppercase tracking-[0.3em] text-slate-400">
+                  Availability
+                </p>
+                <h3 class="mt-3 text-2xl font-semibold text-slate-100">
+                  Open for premium backend engagements.
+                </h3>
+                <p class="mt-3 text-sm text-slate-300">
+                  I'm currently accepting select collaborations and internship
+                  opportunities aligned with high-impact backend systems.
+                </p>
+                <a
+                  href="#home"
+                  class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-sky-200 transition duration-500 ease-out hover:text-sky-100"
+                >
+                  Back to top
+                  <span class="text-lg">Up</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="border-t border-white/10 bg-slate-950/80">
+        <div
+          class="mx-auto flex max-w-6xl flex-col items-start justify-between gap-4 px-6 py-6 md:flex-row md:items-center"
+        >
+          <div class="flex items-center gap-3">
+            <img
+              src="{% static 'images/logo.png' %}"
+              alt="Ismatov mark"
+              class="h-8 w-auto opacity-70"
+              loading="lazy"
+              decoding="async"
+            />
+            <p class="text-sm text-slate-400">
+              (c) 2025 Ismatov Shaxriyor. Crafted with precision and care.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500">
+            <span>Python</span>
+            <span>Django</span>
+            <span>FastAPI</span>
+            <span>Telegram Bots</span>
+          </div>
+        </div>
+      </footer>
+
+      <div
+        class="hidden opacity-100 translate-y-0 transition-none"
+        aria-hidden="true"
+      ></div>
+    </div>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script>
+      const contactForm = document.getElementById('contactForm');
+      if (contactForm) {
+        const alertBox = document.getElementById('alertBox');
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const defaultButtonLabel = submitButton ? submitButton.textContent : null;
+
+        const setAlert = (type, message) => {
+          if (!alertBox) {
+            return;
+          }
+
+          const styles = {
+            success:
+              'rounded-2xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200',
+            error:
+              'rounded-2xl border border-rose-400/40 bg-rose-500/10 px-4 py-3 text-sm text-rose-200',
+            pending:
+              'rounded-2xl border border-sky-400/40 bg-sky-500/10 px-4 py-3 text-sm text-sky-200',
+          };
+
+          alertBox.className = styles[type] || styles.error;
+          alertBox.textContent = message;
+        };
+
+        contactForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+
+          if (!contactForm.checkValidity()) {
+            contactForm.reportValidity();
+            return;
+          }
+
+          if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+          }
+          setAlert('pending', 'Sending your message...');
+
+          const csrfTokenInput = contactForm.querySelector(
+            '[name=csrfmiddlewaretoken]'
+          );
+          const formData = new FormData(contactForm);
+          const postUrl =
+            contactForm.getAttribute('action') || window.location.pathname;
+
+          try {
+            const response = await fetch(postUrl, {
+              method: 'POST',
+              headers: {
+                'X-CSRFToken': csrfTokenInput ? csrfTokenInput.value : '',
+                'X-Requested-With': 'XMLHttpRequest',
+              },
+              body: formData,
+            });
+
+            let payload = null;
+            try {
+              payload = await response.json();
+            } catch (error) {
+              throw new Error('Server returned an unexpected response.');
+            }
+
+            if (response.ok && payload && payload.success) {
+              setAlert(
+                'success',
+                payload.message || 'Message sent successfully.'
+              );
+              contactForm.reset();
+            } else {
+              setAlert(
+                'error',
+                (payload && payload.message) ||
+                  'Something went wrong. Please try again.'
+              );
+            }
+          } catch (error) {
+            setAlert(
+              'error',
+              'Unable to send message right now. Please try again.'
+            );
+            console.error('Contact form error:', error);
+          } finally {
+            if (submitButton) {
+              submitButton.disabled = false;
+              submitButton.textContent = defaultButtonLabel || 'Send Message';
+            }
+          }
+        });
+      }
+    </script>
+  </body>
 </html>
