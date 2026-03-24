@@ -1,0 +1,119 @@
+import type { ContactLink, HeroStat, NavItem, Project } from '@/lib/types'
+
+export const NAV_ITEMS: readonly NavItem[] = [
+  { label: 'Projects', href: '#projects' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'About', href: '#about' },
+  { label: 'Contact', href: '#contact' }
+]
+
+export const HERO_ROLES: readonly string[] = [
+  'Backend Developer',
+  'Django & DRF Engineer',
+  'Telegram Bot Architect',
+  'Scalable API Builder'
+]
+
+export const HERO_STATS: readonly HeroStat[] = [
+  { label: 'SYS', value: 'ONLINE', signal: 'blue' },
+  { label: 'UPTIME', value: '99.9%', signal: 'blue' },
+  { label: 'LATENCY', value: '42ms' }
+]
+
+export const PROJECTS: readonly Project[] = [
+  {
+    id: 'marketplace-bot',
+    title: 'Marketplace Telegram Bot',
+    summary: 'OLX-style product marketplace fully operated inside Telegram.',
+    description:
+      'Designed an async-first marketplace bot with category flows, seller/buyer interactions, moderation queues, and resilient background delivery for high request concurrency.',
+    techStack: ['Python', 'Django', 'DRF', 'PostgreSQL', 'Redis', 'Celery'],
+    architecture:
+      'Layered service architecture with queue-backed workloads. Redis powers hot-path caching and rate-safe task distribution while PostgreSQL handles transactional domain state.',
+    apiHint: 'GET /projects/marketplace-bot',
+    signal: 'blue'
+  },
+  {
+    id: 'movie-download-bot',
+    title: 'Movie Download Bot',
+    summary: 'High-throughput media bot optimized for quick retrieval and delivery.',
+    description:
+      'Built a searchable movie delivery backend with metadata indexing, file-id caching, and async queue orchestration to keep response times stable under burst traffic.',
+    techStack: ['Python', 'Django', 'Telegram API', 'PostgreSQL', 'Redis'],
+    architecture:
+      'Read-heavy architecture with indexed search and cache-first routing. Media metadata and lookup keys are partitioned to protect command-response latency.',
+    apiHint: 'GET /projects/movie-download-bot',
+    signal: 'red'
+  },
+  {
+    id: 'realtime-chat-api',
+    title: 'Real-time Chat API',
+    summary: 'WebSocket and REST backend for live messaging systems.',
+    description:
+      'Implemented channel-based communication, durable message persistence, presence tracking, and read/typing indicators with reliable fan-out between WebSocket workers.',
+    techStack: ['Django Channels', 'DRF', 'Redis', 'PostgreSQL', 'Daphne'],
+    architecture:
+      'Event-driven core with Redis pub/sub as broadcast fabric. HTTP APIs provide durable history while socket workers handle transient realtime state.',
+    apiHint: 'GET /projects/realtime-chat-api',
+    signal: 'blue'
+  },
+  {
+    id: 'drf-boilerplate',
+    title: 'DRF Boilerplate',
+    summary: 'Production-focused Django REST baseline for rapid project starts.',
+    description:
+      'Created a reusable backend foundation with auth, permissions, structured settings, observability defaults, and deployment-ready conventions for teams.',
+    techStack: ['Django', 'DRF', 'PostgreSQL', 'Docker', 'GitHub Actions'],
+    architecture:
+      'Clean module boundaries, explicit service/use-case layers, and environment-driven configuration for consistent behavior from local development to production.',
+    apiHint: 'GET /projects/drf-boilerplate',
+    signal: 'red'
+  }
+]
+
+export const ABOUT_TEXT: readonly string[] = [
+  "My name is Shaxriyor, and I'm 19 years old. I am a junior-level backend developer who can build websites and Telegram bots.",
+  'I am currently studying Artificial Intelligence at the National University of Uzbekistan, and I am working hard to take on bigger projects in the future.'
+]
+
+export const ABOUT_HIGHLIGHTS: ReadonlyArray<{ title: string; text: string }> = [
+  {
+    title: 'Education',
+    text: 'Faculty of Mathematics, Artificial Intelligence, National University of Uzbekistan (Mirzo Ulugbek).'
+  },
+  {
+    title: 'Mission',
+    text: 'Deliver premium backend experiences that are secure, elegant, and reliable.'
+  },
+  {
+    title: 'Passion',
+    text: 'Designing systems that empower teams to ship faster with confidence.'
+  }
+]
+
+export const CONTACTS: readonly Omit<ContactLink, 'icon'>[] = [
+  {
+    id: 'email',
+    label: 'Email',
+    value: 'shaxriyorismatov2007@gmail.com',
+    href: 'mailto:shaxriyorismatov2007@gmail.com',
+    external: false,
+    signal: 'blue'
+  },
+  {
+    id: 'telegram',
+    label: 'Telegram',
+    value: '@ismatov_shaxriyor',
+    href: 'https://t.me/ismatov_shaxriyor',
+    external: true,
+    signal: 'blue'
+  },
+  {
+    id: 'github',
+    label: 'GitHub',
+    value: 'ismatovshaxriyor',
+    href: 'https://github.com/ismatovshaxriyor',
+    external: true,
+    signal: 'red'
+  }
+]
