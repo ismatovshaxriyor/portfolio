@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
+import Button from '@/components/ui/Button'
 
 type LogLevel = 'DEBUG' | 'INFO' | 'WARN' | 'OK'
 
@@ -160,10 +161,18 @@ export default function LoadingPage({ onContinue }: LoadingPageProps) {
 
         <div className="mt-5 border border-white/10 bg-[#030303] px-3 py-2.5 font-mono text-[11px] tracking-[0.08em]">
           {awaitingConfirm ? (
-            <p className="text-white/80">
-              Do you want continue? <span className="text-signal-blue">[Y/n]</span>
-              <span className="ml-1 inline-block w-2 animate-pulse text-white/60">_</span>
-            </p>
+            <div className="space-y-3">
+              <p className="text-white/80">
+                Do you want to continue? <span className="text-signal-blue">[Y/n]</span>
+                <span className="ml-1 inline-block w-2 animate-pulse text-white/60">_</span>
+              </p>
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-[10px] uppercase tracking-[0.12em] text-white/45">Press Y/Enter or tap button</p>
+                <Button type="button" variant="outline" onClick={onContinue} className="w-full sm:w-auto">
+                  Continue
+                </Button>
+              </div>
+            </div>
           ) : (
             <p className="text-white/45">Awaiting boot sequence completion...</p>
           )}

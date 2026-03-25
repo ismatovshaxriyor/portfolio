@@ -233,7 +233,7 @@ export default function Skills() {
   )
 
   return (
-    <section id="skills" ref={sectionRef} className="site-shell section-border py-20">
+    <section id="skills" ref={sectionRef} className="site-shell section-border py-16 sm:py-20">
       <div className={cn('section-reveal', visible && 'section-reveal-visible')}>
         <header className="mb-10">
           <p className="mb-2 text-[11px] uppercase tracking-[0.3em] text-white/45">
@@ -257,7 +257,7 @@ export default function Skills() {
                     key={group.id}
                     style={stageStyle}
                     className={cn(
-                      'skill-panel skill-panel-stage relative overflow-hidden border border-white/12 bg-[#050505] p-5',
+                      'skill-panel skill-panel-stage relative overflow-hidden border border-white/12 bg-[#050505] p-4 sm:p-5',
                       visible && 'skill-panel-stage-visible'
                     )}
                   >

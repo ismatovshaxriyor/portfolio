@@ -81,7 +81,7 @@ export default function Hero() {
   }, [isOnline, latencyMs, uptimeSeconds])
 
   return (
-    <section id="top" className="relative flex min-h-screen items-center overflow-hidden border-b border-white/10 bg-black pt-24">
+    <section id="top" className="relative flex min-h-screen items-center overflow-hidden border-b border-white/10 bg-black pt-28 sm:pt-24">
       <canvas ref={canvasRef} className="gpu-layer pointer-events-none absolute inset-0 z-0 opacity-60" />
       <div className="scanline-overlay gpu-layer" aria-hidden="true" />
 
@@ -119,23 +119,23 @@ export default function Hero() {
         <p>{runtimeWorkers}</p>
       </div>
 
-      <div className="site-shell relative z-20 -mt-7 md:-mt-10">
-        <div className="max-w-3xl pl-2 sm:pl-4 md:pl-6">
-          <p className="mb-4 inline-flex border border-white/20 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-white/60">
+      <div className="site-shell relative z-20 mt-0 sm:-mt-6 md:-mt-10">
+        <div className="max-w-3xl pl-0 sm:pl-4 md:pl-6">
+          <p className="mb-4 inline-flex border border-white/20 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-white/60 sm:tracking-[0.24em]">
             <ScrambleHoverText text="backend engineer aesthetic" />
           </p>
 
           <RainText
             as="h1"
             text="Shaxriyor Ismatov"
-            className="text-balance font-space text-4xl font-semibold leading-tight text-white sm:text-5xl md:text-6xl"
+            className="text-balance font-space text-3xl font-semibold leading-tight text-white sm:text-5xl md:text-6xl"
             durationMs={900}
             staggerMs={34}
             startY={-86}
             bounceY={14}
           />
 
-          <p className="mt-6 flex min-h-9 items-center gap-3 text-base uppercase tracking-[0.2em] text-white/80 sm:text-lg">
+          <p className="mt-6 flex min-h-9 items-center gap-2.5 text-sm uppercase tracking-[0.14em] text-white/80 sm:gap-3 sm:text-lg sm:tracking-[0.2em]">
             <span className="text-signal-blue">&gt;</span>
             <span>{text}</span>
             <span className={isHolding ? 'cursor-blink text-signal-blue' : 'text-signal-blue'}>|</span>
@@ -145,12 +145,12 @@ export default function Hero() {
             Backend developer focused on Python, Django, DRF, and scalable Telegram systems. I design APIs and architecture that stay predictable under load.
           </p>
 
-          <div className="mt-10 flex flex-wrap gap-3">
-            <Button href="#projects" variant="solid">
+          <div className="mt-9 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap">
+            <Button href="#projects" variant="solid" className="w-full sm:w-auto">
               <ScrambleHoverText text="View Systems" />
               <IconArrowRight size={16} />
             </Button>
-            <Button href="#contact" variant="outline">
+            <Button href="#contact" variant="outline" className="w-full sm:w-auto">
               <ScrambleHoverText text="Init Contact" />
             </Button>
           </div>

@@ -94,7 +94,12 @@ export default function Modal({ isOpen, title, onClose, children }: ModalProps) 
   }
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-5" role="dialog" aria-modal="true" aria-label={title}>
+    <div
+      className="fixed inset-0 z-50 flex items-start justify-center p-3 pt-16 sm:pt-20 md:items-center md:p-5"
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+    >
       <button
         type="button"
         className="absolute inset-0 bg-black/80 backdrop-blur-[1px]"
@@ -103,8 +108,10 @@ export default function Modal({ isOpen, title, onClose, children }: ModalProps) 
       />
 
       <div ref={panelRef} className="relative z-10 w-full max-w-6xl border border-white/15 bg-black">
-        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
-          <p className="font-space text-xs uppercase tracking-[0.24em] text-white/60">{title}</p>
+        <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3 sm:px-5 sm:py-4">
+          <p className="truncate font-space text-[11px] uppercase tracking-[0.16em] text-white/60 sm:text-xs sm:tracking-[0.24em]">
+            {title}
+          </p>
           <button
             type="button"
             onClick={onClose}
@@ -114,7 +121,9 @@ export default function Modal({ isOpen, title, onClose, children }: ModalProps) 
             <IconClose size={18} />
           </button>
         </div>
-        <div className="max-h-[calc(100vh-7.5rem)] overflow-y-auto overflow-x-hidden p-5 md:p-6 lg:p-7">{children}</div>
+        <div className="max-h-[calc(100vh-6.5rem)] overflow-y-auto overflow-x-hidden p-4 sm:p-5 md:max-h-[calc(100vh-7.5rem)] md:p-6 lg:p-7">
+          {children}
+        </div>
       </div>
     </div>,
     document.body

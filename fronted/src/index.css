@@ -26,6 +26,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 a {
@@ -645,6 +646,28 @@ a {
     opacity: 1;
     transform: translateY(0);
     filter: blur(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .site-shell {
+    width: 100%;
+    padding-inline: 0.9rem;
+  }
+
+  .about-rail::before {
+    display: none;
+  }
+
+  .skill-logo-pill {
+    width: 32px;
+    height: 32px;
+    margin-right: 7px;
+  }
+
+  .skill-logo-pill-img {
+    width: 18px;
+    height: 18px;
   }
 }
 

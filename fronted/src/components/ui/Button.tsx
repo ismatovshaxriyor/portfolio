@@ -25,7 +25,7 @@ export default function Button(props: Props) {
   const { children, className, variant = 'solid' } = props
 
   const baseClass =
-    'inline-flex items-center justify-center gap-2 border px-5 py-2.5 text-xs font-medium uppercase tracking-[0.24em] transition-all duration-300 ease-system-ease focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60'
+    'inline-flex items-center justify-center gap-2 border px-4 py-2.5 text-xs font-medium uppercase tracking-[0.18em] transition-all duration-300 ease-system-ease focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 sm:px-5 sm:tracking-[0.24em]'
 
   const variantClass =
     variant === 'solid'

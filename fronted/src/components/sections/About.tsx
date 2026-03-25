@@ -7,7 +7,7 @@ export default function About() {
   const [sectionRef, visible] = useIntersectionObserver<HTMLElement>({ threshold: 0.2 })
 
   return (
-    <section id="about" ref={sectionRef} className="site-shell section-border py-20">
+    <section id="about" ref={sectionRef} className="site-shell section-border py-16 sm:py-20">
       <div className={cn('section-reveal', visible && 'section-reveal-visible')}>
         <header className="mb-10">
           <p className="mb-2 text-[11px] uppercase tracking-[0.3em] text-white/45">

@@ -222,7 +222,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" ref={sectionRef} className="site-shell py-20">
+    <section id="contact" ref={sectionRef} className="site-shell py-16 sm:py-20">
       <div className={cn('section-reveal', visible && 'section-reveal-visible')}>
         <header className="mb-10 text-center">
           <p className="mb-2 text-[11px] uppercase tracking-[0.3em] text-white/45">
@@ -233,7 +233,7 @@ export default function Contact() {
             as="h2"
             text={"Let's build scalable systems."}
             play={visible}
-            className="mt-6 text-3xl font-medium text-white sm:text-4xl"
+            className="mt-6 text-2xl font-medium text-white sm:text-4xl"
             durationMs={820}
             staggerMs={24}
             startY={-72}
@@ -313,8 +313,8 @@ export default function Contact() {
 
               <label className="flex flex-col gap-1">
                 <span className="text-[10px] uppercase tracking-[0.22em] text-white/45">Anti-Bot Check</span>
-                <div className="flex border border-white/15 bg-black transition-colors duration-200 focus-within:border-white/45">
-                  <span className="inline-flex min-w-[138px] items-center justify-center gap-1.5 border-r border-white/15 px-3 py-2 font-mono text-sm tracking-[0.1em] text-white/86">
+                <div className="flex flex-col border border-white/15 bg-black transition-colors duration-200 focus-within:border-white/45 sm:flex-row">
+                  <span className="inline-flex min-w-0 items-center justify-center gap-1.5 border-b border-white/15 px-3 py-2 font-mono text-sm tracking-[0.08em] text-white/86 sm:min-w-[138px] sm:border-b-0 sm:border-r sm:tracking-[0.1em]">
                     <span className="text-signal-blue">{challenge.a}</span>
                     <span className="text-white/65">+</span>
                     <span className="text-signal-blue">{challenge.b}</span>
@@ -327,7 +327,7 @@ export default function Contact() {
                     inputMode="numeric"
                     value={formData.challenge}
                     onChange={(event) => handleFieldChange('challenge', event.target.value)}
-                    className="flex-1 bg-transparent px-3 py-2 text-sm tracking-[0.08em] text-white outline-none placeholder:text-white/30"
+                    className="w-full flex-1 bg-transparent px-3 py-2 text-sm tracking-[0.08em] text-white outline-none placeholder:text-white/30"
                     placeholder="Enter result"
                     required
                     aria-invalid={Boolean(fieldErrors.challenge)}
