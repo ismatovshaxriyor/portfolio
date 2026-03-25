@@ -115,5 +115,13 @@ export const CONTACTS: readonly Omit<ContactLink, 'icon'>[] = [
     href: 'https://github.com/ismatovshaxriyor',
     external: true,
     signal: 'red'
+  },
+  {
+    id: 'instagram',
+    label: 'Instagram',
+    value: 'ismatov_shaxriyor',
+    href: 'https://www.instagram.com/ismatov_shaxriyor/',
+    external: true,
+    signal: 'red'
   }
 ]
