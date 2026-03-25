@@ -143,6 +143,12 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 WHITENOISE_MAX_AGE = 60 * 60 * 24 * 30
+PROJECT_COVER_UPLOADS_TO_STATIC_ROOT = _env_bool("PROJECT_COVER_UPLOADS_TO_STATIC_ROOT", default=True)
+PROJECT_COVER_UPLOAD_DIR = (
+    STATIC_ROOT / "images" / "projects"
+    if PROJECT_COVER_UPLOADS_TO_STATIC_ROOT
+    else BASE_DIR / "static" / "images" / "projects"
+)
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
