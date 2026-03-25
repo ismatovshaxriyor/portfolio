@@ -44,6 +44,8 @@ interface QuietZone {
 }
 
 type GlyphType = 'bot' | 'bug' | 'server' | 'api'
+const MOBILE_HEIGHT_JITTER_THRESHOLD = 140
+const ORIENTATION_SHIFT_THRESHOLD = 0.45
 
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value))
@@ -286,6 +288,31 @@ function createPoints(width: number, height: number): NodePoint[] {
   return points
 }
 
+function adaptPointsForResize(points: NodePoint[], oldWidth: number, oldHeight: number, width: number, height: number): NodePoint[] {
+  const targetCount = clamp(Math.floor((width * height) / 13200), 74, 210)
+  const scaleX = width / Math.max(1, oldWidth)
+  const scaleY = height / Math.max(1, oldHeight)
+  const adjusted: NodePoint[] = points.slice(0, targetCount).map((point) => ({
+    ...point,
+    x: clamp(point.x * scaleX, 0, width),
+    y: clamp(point.y * scaleY, 0, height)
+  }))
+
+  while (adjusted.length < targetCount) {
+    adjusted.push(createPoint(width, height, true))
+  }
+
+  return adjusted
+}
+
+function clampPointsToViewport(points: NodePoint[], width: number, height: number): NodePoint[] {
+  return points.map((point) => ({
+    ...point,
+    x: clamp(point.x, 0, width),
+    y: clamp(point.y, 0, height)
+  }))
+}
+
 export function useCanvasAnimation(canvasRef: RefObject<HTMLCanvasElement>) {
   const stateRef = useRef<CanvasState | null>(null)
 
@@ -303,7 +330,9 @@ export function useCanvasAnimation(canvasRef: RefObject<HTMLCanvasElement>) {
       return
     }
 
-    const resize = () => {
+    let resizeRafId: number | null = null
+
+    const applyResize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
       const width = window.innerWidth
       const height = window.innerHeight
@@ -314,15 +343,37 @@ export function useCanvasAnimation(canvasRef: RefObject<HTMLCanvasElement>) {
       canvas.style.height = `${height}px`
       context.setTransform(dpr, 0, 0, dpr, 0, 0)
 
-      const nextPointer: PointerState = stateRef.current?.pointer ?? {
+      const previousState = stateRef.current
+      const nextPointer: PointerState = previousState?.pointer ?? {
         x: width / 2,
         y: height / 2,
         active: false
       }
+      const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches
+
+      let nextPoints: NodePoint[]
+      if (!previousState) {
+        nextPoints = createPoints(width, height)
+      } else {
+        const widthDelta = Math.abs(previousState.width - width)
+        const heightDelta = Math.abs(previousState.height - height)
+        const previousAspect = previousState.width / Math.max(1, previousState.height)
+        const nextAspect = width / Math.max(1, height)
+        const aspectShift = Math.abs(nextAspect - previousAspect) / Math.max(0.001, previousAspect)
+        const jitterResize = isCoarsePointer && widthDelta < 2 && heightDelta < MOBILE_HEIGHT_JITTER_THRESHOLD
+
+        if (jitterResize) {
+          nextPoints = clampPointsToViewport(previousState.points, width, height)
+        } else if (aspectShift > ORIENTATION_SHIFT_THRESHOLD) {
+          nextPoints = createPoints(width, height)
+        } else {
+          nextPoints = adaptPointsForResize(previousState.points, previousState.width, previousState.height, width, height)
+        }
+      }
 
       stateRef.current = {
-        rafId: 0,
-        points: createPoints(width, height),
+        rafId: previousState?.rafId ?? 0,
+        points: nextPoints,
         pointer: nextPointer,
         width,
         height,
@@ -330,9 +381,22 @@ export function useCanvasAnimation(canvasRef: RefObject<HTMLCanvasElement>) {
       }
     }
 
+    const resize = () => {
+      if (resizeRafId !== null) {
+        window.cancelAnimationFrame(resizeRafId)
+      }
+      resizeRafId = window.requestAnimationFrame(() => {
+        resizeRafId = null
+        applyResize()
+      })
+    }
+
     const onPointerMove = (event: PointerEvent) => {
       const state = stateRef.current
       if (!state) {
+        return
+      }
+      if (event.pointerType === 'touch') {
         return
       }
 
@@ -511,7 +575,7 @@ export function useCanvasAnimation(canvasRef: RefObject<HTMLCanvasElement>) {
       state.rafId = window.requestAnimationFrame(draw)
     }
 
-    resize()
+    applyResize()
     draw()
 
     window.addEventListener('resize', resize)
@@ -522,6 +586,9 @@ export function useCanvasAnimation(canvasRef: RefObject<HTMLCanvasElement>) {
       const state = stateRef.current
       if (state) {
         window.cancelAnimationFrame(state.rafId)
+      }
+      if (resizeRafId !== null) {
+        window.cancelAnimationFrame(resizeRafId)
       }
       window.removeEventListener('resize', resize)
       window.removeEventListener('pointermove', onPointerMove)
