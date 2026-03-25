@@ -27,6 +27,7 @@ class Project(models.Model):
     description = models.TextField()
     architecture = models.TextField()
     api_hint = models.CharField(max_length=160)
+    cover_image = models.CharField(max_length=255, blank=True, default="")
     signal = models.CharField(max_length=8, choices=Signal.choices, default=Signal.BLUE)
     tech_stack = models.JSONField(default=list)
     sort_order = models.PositiveIntegerField(default=0)

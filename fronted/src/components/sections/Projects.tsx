@@ -28,6 +28,7 @@ function normalizeProject(entry: unknown): Project | null {
   const description = typeof entry.description === 'string' ? entry.description.trim() : ''
   const architecture = typeof entry.architecture === 'string' ? entry.architecture.trim() : ''
   const apiHint = typeof entry.apiHint === 'string' ? entry.apiHint.trim() : ''
+  const coverImage = typeof entry.coverImage === 'string' ? entry.coverImage.trim() : ''
   const signal = entry.signal === 'red' ? 'red' : entry.signal === 'blue' ? 'blue' : null
   const rawTechStack =
     Array.isArray(entry.techStack) && entry.techStack.every((tech) => typeof tech === 'string')
@@ -46,9 +47,18 @@ function normalizeProject(entry: unknown): Project | null {
     description,
     architecture,
     apiHint,
+    coverImage,
     signal,
     techStack
   }
+}
+
+function resolveProjectImage(imagePath?: string): string {
+  const normalized = imagePath?.trim() ?? ''
+  if (!normalized) {
+    return ''
+  }
+  return apiUrl(normalized)
 }
 
 export default function Projects() {
@@ -60,6 +70,7 @@ export default function Projects() {
     () => projects.find((project) => project.id === activeProjectId) ?? null,
     [activeProjectId, projects]
   )
+  const activeProjectImage = useMemo(() => resolveProjectImage(activeProject?.coverImage), [activeProject?.coverImage])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -142,6 +153,7 @@ export default function Projects() {
           {projects.map((project, index) => {
             const signalClass =
               project.signal === 'blue' ? 'project-card-blue group-hover:border-signal-blue/50 group-hover:shadow-signal-blue' : 'project-card-red group-hover:border-signal-red/50 group-hover:shadow-signal-red'
+            const projectImage = resolveProjectImage(project.coverImage)
             const stageStyle: CSSProperties = {
               transitionDelay: `${index * 90}ms`
             }
@@ -177,6 +189,23 @@ export default function Projects() {
 
                   <div className="pointer-events-none absolute left-0 top-0 h-[1px] w-full overflow-hidden">
                     <span className="project-card-scanline" />
+                  </div>
+
+                  <div className="relative mb-4 aspect-[16/7] overflow-hidden border border-white/10 bg-[#040404]">
+                    {projectImage ? (
+                      <img
+                        src={projectImage}
+                        alt={`${project.title} preview`}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover object-center opacity-60 saturate-0 contrast-110 transition duration-300 ease-system-ease group-hover:opacity-72"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center text-white/35">
+                        <IconGrid size={20} />
+                      </div>
+                    )}
+                    <div className="scanline-overlay" aria-hidden="true" />
                   </div>
 
                   <div className="mb-5 inline-flex h-8 w-8 items-center justify-center border border-white/20 text-white/65 transition-all duration-300 group-hover:border-white/45 group-hover:text-white">
@@ -259,10 +288,20 @@ export default function Projects() {
             <div className="space-y-5">
               <div className="relative flex aspect-[16/10] items-center justify-center border border-white/10 bg-[#050505]">
                 <div className="scanline-overlay" aria-hidden="true" />
-                <div className="relative z-10 flex items-center gap-2 text-white/35">
-                  <IconGrid size={22} />
-                  <span className="text-xs uppercase tracking-[0.14em] sm:tracking-[0.22em]">ARCHITECTURE_PLACEHOLDER</span>
-                </div>
+                {activeProjectImage ? (
+                  <img
+                    src={activeProjectImage}
+                    alt={`${activeProject.title} architecture preview`}
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-cover object-center opacity-62 saturate-0 contrast-110"
+                  />
+                ) : (
+                  <div className="relative z-10 flex items-center gap-2 text-white/35">
+                    <IconGrid size={22} />
+                    <span className="text-xs uppercase tracking-[0.14em] sm:tracking-[0.22em]">ARCHITECTURE_PLACEHOLDER</span>
+                  </div>
+                )}
               </div>
 
               <section>

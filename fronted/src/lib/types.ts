@@ -21,6 +21,7 @@ export interface Project {
   techStack: string[]
   architecture: string
   apiHint: string
+  coverImage?: string
   signal: SignalColor
 }
 
