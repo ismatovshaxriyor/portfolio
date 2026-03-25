@@ -1,17 +1,27 @@
-# Shaxriyor Ismatov Portfolio (ismatov.uz)
+# Shaxriyor Ismatov Portfolio
 
-Minimalistic, futuristic portfolio website for a backend-focused developer, built for ismatov.uz.
+Production-ready portfolio project with a modern frontend and API-driven backend.
 
-## What We Used
+## Live Website
+
+- https://ismatov.uz
+
+## Project Parts
+
+- `fronted/` - Vite + React + TypeScript + Tailwind CSS frontend
+- `portfolio/` + `config/` - Django + Django REST Framework backend
+- `static/` - static assets
+
+## Technology Stack
 
 - Vite
 - React
-- TypeScript (strict mode)
+- TypeScript
 - Tailwind CSS
 - Django
 - Django REST Framework
-- Redis (cache / rate-limit support)
-- Nginx (deployment proxy)
+- Redis
+- Nginx
 
 ## Official Websites
 
