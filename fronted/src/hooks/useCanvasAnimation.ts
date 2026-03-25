@@ -32,6 +32,7 @@ interface CanvasState {
   width: number
   height: number
   quietZone: QuietZone
+  softMode: boolean
 }
 
 interface QuietZone {
@@ -232,9 +233,9 @@ function drawGlyph(
   context.restore()
 }
 
-function createPoint(width: number, height: number, emerging = false): NodePoint {
-  const minAlpha = 0.05 + Math.random() * 0.16
-  const maxAlpha = 0.62 + Math.random() * 0.33
+function createPoint(width: number, height: number, softMode = false, emerging = false): NodePoint {
+  const minAlpha = (softMode ? 0.14 : 0.05) + Math.random() * (softMode ? 0.14 : 0.16)
+  const maxAlpha = (softMode ? 0.56 : 0.62) + Math.random() * (softMode ? 0.28 : 0.33)
   const shouldStartDim = emerging || Math.random() < 0.52
   const alpha = shouldStartDim ? minAlpha + Math.random() * 0.045 : maxAlpha - Math.random() * 0.05
 
@@ -250,15 +251,15 @@ function createPoint(width: number, height: number, emerging = false): NodePoint
     minAlpha,
     maxAlpha,
     targetAlpha: shouldStartDim ? maxAlpha : minAlpha,
-    fadeSpeed: 0.0016 + Math.random() * 0.0032,
+    fadeSpeed: softMode ? 0.0012 + Math.random() * 0.0024 : 0.0016 + Math.random() * 0.0032,
     radius: 4.08 + Math.random() * 4.4,
     color: pickPointColor(),
     glyph: pickGlyph()
   }
 }
 
-function respawnPoint(point: NodePoint, width: number, height: number): void {
-  const next = createPoint(width, height, true)
+function respawnPoint(point: NodePoint, width: number, height: number, softMode: boolean): void {
+  const next = createPoint(width, height, softMode, true)
   point.x = next.x
   point.y = next.y
   point.vx = next.vx
@@ -276,19 +277,26 @@ function respawnPoint(point: NodePoint, width: number, height: number): void {
   point.glyph = next.glyph
 }
 
-function createPoints(width: number, height: number): NodePoint[] {
+function createPoints(width: number, height: number, softMode: boolean): NodePoint[] {
   const area = width * height
   const count = clamp(Math.floor(area / 13200), 74, 210)
   const points: NodePoint[] = []
 
   for (let index = 0; index < count; index += 1) {
-    points.push(createPoint(width, height))
+    points.push(createPoint(width, height, softMode))
   }
 
   return points
 }
 
-function adaptPointsForResize(points: NodePoint[], oldWidth: number, oldHeight: number, width: number, height: number): NodePoint[] {
+function adaptPointsForResize(
+  points: NodePoint[],
+  oldWidth: number,
+  oldHeight: number,
+  width: number,
+  height: number,
+  softMode: boolean
+): NodePoint[] {
   const targetCount = clamp(Math.floor((width * height) / 13200), 74, 210)
   const scaleX = width / Math.max(1, oldWidth)
   const scaleY = height / Math.max(1, oldHeight)
@@ -299,7 +307,7 @@ function adaptPointsForResize(points: NodePoint[], oldWidth: number, oldHeight: 
   }))
 
   while (adjusted.length < targetCount) {
-    adjusted.push(createPoint(width, height, true))
+    adjusted.push(createPoint(width, height, softMode, true))
   }
 
   return adjusted
@@ -350,10 +358,11 @@ export function useCanvasAnimation(canvasRef: RefObject<HTMLCanvasElement>) {
         active: false
       }
       const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches
+      const softMode = isCoarsePointer || width < 820
 
       let nextPoints: NodePoint[]
       if (!previousState) {
-        nextPoints = createPoints(width, height)
+        nextPoints = createPoints(width, height, softMode)
       } else {
         const widthDelta = Math.abs(previousState.width - width)
         const heightDelta = Math.abs(previousState.height - height)
@@ -365,9 +374,16 @@ export function useCanvasAnimation(canvasRef: RefObject<HTMLCanvasElement>) {
         if (jitterResize) {
           nextPoints = clampPointsToViewport(previousState.points, width, height)
         } else if (aspectShift > ORIENTATION_SHIFT_THRESHOLD) {
-          nextPoints = createPoints(width, height)
+          nextPoints = createPoints(width, height, softMode)
         } else {
-          nextPoints = adaptPointsForResize(previousState.points, previousState.width, previousState.height, width, height)
+          nextPoints = adaptPointsForResize(
+            previousState.points,
+            previousState.width,
+            previousState.height,
+            width,
+            height,
+            softMode
+          )
         }
       }
 
@@ -377,7 +393,8 @@ export function useCanvasAnimation(canvasRef: RefObject<HTMLCanvasElement>) {
         pointer: nextPointer,
         width,
         height,
-        quietZone: createQuietZone(width, height)
+        quietZone: createQuietZone(width, height),
+        softMode
       }
     }
 
@@ -473,7 +490,11 @@ export function useCanvasAnimation(canvasRef: RefObject<HTMLCanvasElement>) {
         const reachedTarget = Math.abs(point.alpha - point.targetAlpha) < 0.004
         if (reachedTarget) {
           if (point.targetAlpha <= point.minAlpha + 0.001) {
-            respawnPoint(point, width, height)
+            if (state.softMode) {
+              point.targetAlpha = point.maxAlpha
+            } else {
+              respawnPoint(point, width, height, state.softMode)
+            }
           } else {
             point.targetAlpha = point.minAlpha
           }
@@ -567,7 +588,8 @@ export function useCanvasAnimation(canvasRef: RefObject<HTMLCanvasElement>) {
         const point = points[i]
         const quietFactor = quietFactors[i]
         const colorBoost = point.color === '255, 255, 255' ? 1 : 1.28
-        const alpha = clamp(point.alpha * quietFactor * 1.06 * colorBoost, 0.03, 1)
+        const minVisibleAlpha = state.softMode ? 0.08 : 0.03
+        const alpha = clamp(point.alpha * quietFactor * 1.06 * colorBoost, minVisibleAlpha, 1)
         const radius = point.radius * (0.9 + quietFactor * 1.02)
         drawGlyph(context, point.glyph, point.x, point.y, radius, point.color, alpha)
       }
