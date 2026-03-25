@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { IconArrowUpRight, IconGitHub, IconMail, IconTelegram } from '@/components/icons'
+import { IconArrowUpRight, IconGitHub, IconInstagram, IconMail, IconTelegram } from '@/components/icons'
 import Button from '@/components/ui/Button'
 import RainText from '@/components/ui/RainText'
 import ScrambleHoverText from '@/components/ui/ScrambleHoverText'
@@ -70,10 +70,18 @@ export default function Contact() {
       CONTACTS.map((item) => ({
         ...item,
         icon:
-          item.id === 'email' ? <IconMail size={20} /> : item.id === 'telegram' ? <IconTelegram size={20} /> : <IconGitHub size={20} />
+          item.id === 'email'
+            ? <IconMail size={20} />
+            : item.id === 'telegram'
+              ? <IconTelegram size={20} />
+              : item.id === 'instagram'
+                ? <IconInstagram size={20} />
+                : <IconGitHub size={20} />
       })),
     []
   )
+  const contactsGridClass =
+    contacts.length > 3 ? 'grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2 xl:col-span-2' : 'grid grid-cols-1 gap-4 xl:col-span-2'
 
   useEffect(() => {
     const readCooldown = () => {
@@ -388,7 +396,7 @@ export default function Contact() {
             </form>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 xl:col-span-2">
+          <div className={contactsGridClass}>
             {contacts.map((contact) => {
               const signalClass =
                 contact.signal === 'blue'
@@ -402,11 +410,11 @@ export default function Contact() {
                   target={contact.external ? '_blank' : undefined}
                   rel={contact.external ? 'noreferrer noopener' : undefined}
                   className={cn(
-                    'group border border-white/12 bg-[#060606] p-5 text-left transition-all duration-300 ease-system-ease hover:-translate-y-1',
+                    'group border border-white/12 bg-[#060606] p-4 text-left transition-all duration-300 ease-system-ease hover:-translate-y-1 sm:p-5',
                     signalClass
                   )}
                 >
-                  <div className="mb-4 inline-flex h-9 w-9 items-center justify-center border border-white/20 text-white/70 transition-colors duration-300 group-hover:text-white">
+                  <div className="mb-3 inline-flex h-9 w-9 items-center justify-center border border-white/20 text-white/70 transition-colors duration-300 group-hover:text-white">
                     {contact.icon}
                   </div>
 
@@ -415,7 +423,7 @@ export default function Contact() {
                   </p>
                   <p className="mt-2 text-sm text-white/90">{contact.value}</p>
 
-                  <span className="mt-5 inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] text-white/40 transition-colors duration-300 group-hover:text-white/75">
+                  <span className="mt-4 inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] text-white/40 transition-colors duration-300 group-hover:text-white/75">
                     <ScrambleHoverText text="Open" playOnMount={false} /> <IconArrowUpRight size={14} />
                   </span>
                 </a>
