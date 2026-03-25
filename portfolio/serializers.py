@@ -11,8 +11,17 @@ MESSAGE_MIN_LENGTH = 5
 class ProjectSerializer(serializers.ModelSerializer):
     id = serializers.CharField(source="slug", read_only=True)
     apiHint = serializers.CharField(source="api_hint", read_only=True)
-    coverImage = serializers.CharField(source="cover_image", read_only=True)
+    coverImage = serializers.SerializerMethodField()
     techStack = serializers.ListField(source="tech_stack", child=serializers.CharField(), read_only=True)
+
+    def get_coverImage(self, obj: Project) -> str:
+        uploaded = getattr(obj, "cover_upload", None)
+        if uploaded:
+            try:
+                return str(uploaded.url)
+            except Exception:
+                pass
+        return (obj.cover_image or "").strip()
 
     class Meta:
         model = Project

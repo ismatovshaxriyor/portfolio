@@ -1,4 +1,14 @@
 from django.db import models
+from uuid import uuid4
+
+from .storages import project_cover_storage
+
+
+def project_cover_upload_to(instance: "Project", filename: str) -> str:
+    ext = ""
+    if "." in filename:
+        ext = f".{filename.rsplit('.', 1)[1].lower()}"
+    return f"{instance.slug or 'project'}-{uuid4().hex[:10]}{ext}"
 
 
 class ContactMessage(models.Model):
@@ -27,7 +37,14 @@ class Project(models.Model):
     description = models.TextField()
     architecture = models.TextField()
     api_hint = models.CharField(max_length=160)
-    cover_image = models.CharField(max_length=255, blank=True, default="")
+    cover_image = models.CharField(max_length=255, blank=True, default="", help_text="Fallback static path, e.g. /static/images/img.png")
+    cover_upload = models.FileField(
+        upload_to=project_cover_upload_to,
+        storage=project_cover_storage,
+        blank=True,
+        null=True,
+        help_text="Upload file here to save automatically into static/images/projects/",
+    )
     signal = models.CharField(max_length=8, choices=Signal.choices, default=Signal.BLUE)
     tech_stack = models.JSONField(default=list)
     sort_order = models.PositiveIntegerField(default=0)

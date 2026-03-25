@@ -18,6 +18,20 @@ class ProjectAdmin(admin.ModelAdmin):
     search_fields = ("title", "slug", "summary", "description")
     prepopulated_fields = {"slug": ("title",)}
     ordering = ("sort_order", "id")
+    fields = (
+        "title",
+        "slug",
+        "summary",
+        "description",
+        "architecture",
+        "api_hint",
+        "cover_upload",
+        "cover_image",
+        "signal",
+        "tech_stack",
+        "sort_order",
+        "is_active",
+    )
 
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
