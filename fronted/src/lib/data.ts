@@ -1,7 +1,8 @@
-import type { ContactLink, HeroStat, NavItem, Project } from '@/lib/types'
+import type { ContactLink, HeroStat, NavItem, Project, RoadmapStage } from '@/lib/types'
 
 export const NAV_ITEMS: readonly NavItem[] = [
   { label: 'Projects', href: '#projects' },
+  { label: 'Roadmap', href: '#roadmap' },
   { label: 'Skills', href: '#skills' },
   { label: 'About', href: '#about' },
   { label: 'Contact', href: '#contact' }
@@ -72,6 +73,59 @@ export const PROJECTS: readonly Project[] = [
     apiHint: 'GET /projects/drf-boilerplate',
     coverImage: '/static/images/ismtov.png',
     signal: 'red'
+  }
+]
+
+export const ROADMAP_STAGES: readonly RoadmapStage[] = [
+  {
+    id: 'discovery',
+    title: 'Problem Discovery',
+    window: 'STEP 01',
+    summary: 'I start from business pain, user flow, and measurable outcome before any code is written.',
+    completion: 100,
+    status: 'shipped',
+    signal: 'blue',
+    deliverables: ['Clarify target users', 'Define success metrics', 'List hard constraints']
+  },
+  {
+    id: 'scope',
+    title: 'Scope & Contract',
+    window: 'STEP 02',
+    summary: 'Then I lock MVP boundaries and API contracts so implementation does not drift under pressure.',
+    completion: 100,
+    status: 'shipped',
+    signal: 'red',
+    deliverables: ['Define MVP endpoints', 'Write data contracts', 'Prioritize critical paths']
+  },
+  {
+    id: 'architecture',
+    title: 'Architecture Blueprint',
+    window: 'STEP 03',
+    summary: 'I map modules, queues, and data ownership to keep the backend predictable during growth.',
+    completion: 78,
+    status: 'building',
+    signal: 'blue',
+    deliverables: ['Choose storage strategy', 'Plan async workloads', 'Set observability baseline']
+  },
+  {
+    id: 'delivery',
+    title: 'MVP Delivery Loop',
+    window: 'STEP 04',
+    summary: 'Build, validate, and ship fast iterations with tests and monitoring from day one.',
+    completion: 42,
+    status: 'building',
+    signal: 'red',
+    deliverables: ['Implement core use-cases', 'Add test coverage', 'Ship first stable release']
+  },
+  {
+    id: 'hardening',
+    title: 'Hardening & Scale',
+    window: 'STEP 05',
+    summary: 'After launch, I focus on bottlenecks, security, and scaling strategy for real traffic.',
+    completion: 14,
+    status: 'planned',
+    signal: 'blue',
+    deliverables: ['Tune rate limits', 'Optimize hot endpoints', 'Prepare horizontal scaling']
   }
 ]
 

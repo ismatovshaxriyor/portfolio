@@ -65,3 +65,16 @@ export interface ContactLink {
   icon: ReactNode
   signal: SignalColor
 }
+
+export type RoadmapStatus = 'planned' | 'building' | 'shipped'
+
+export interface RoadmapStage {
+  id: string
+  title: string
+  window: string
+  summary: string
+  completion: number
+  status: RoadmapStatus
+  signal: SignalColor
+  deliverables: string[]
+}

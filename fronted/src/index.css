@@ -521,6 +521,354 @@ a {
   transform: scale(1.06);
 }
 
+.roadmap-shell {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.roadmap-grid-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0px,
+      rgba(255, 255, 255, 0) 44px,
+      rgba(255, 255, 255, 0.018) 44px,
+      rgba(255, 255, 255, 0.018) 45px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0) 0px,
+      rgba(255, 255, 255, 0) 44px,
+      rgba(255, 255, 255, 0.016) 44px,
+      rgba(255, 255, 255, 0.016) 45px
+    );
+  opacity: 0.5;
+}
+
+.roadmap-shell > *:not(.roadmap-grid-overlay) {
+  position: relative;
+  z-index: 1;
+}
+
+.roadmap-card-stage {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 520ms cubic-bezier(0.16, 1, 0.3, 1), transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.roadmap-card-stage-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.roadmap-card {
+  --roadmap-accent: rgba(59, 130, 246, 0.24);
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), border-color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.roadmap-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 88% 22%, var(--roadmap-accent), transparent 48%);
+  opacity: 0;
+  transition: opacity 280ms ease;
+}
+
+.roadmap-card-blue {
+  --roadmap-accent: rgba(59, 130, 246, 0.2);
+}
+
+.roadmap-card-red {
+  --roadmap-accent: rgba(239, 68, 68, 0.2);
+}
+
+.roadmap-card-building {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.roadmap-card-shipped {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.roadmap-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.42);
+}
+
+.roadmap-card:hover::before {
+  opacity: 1;
+}
+
+.roadmap-card-scanline {
+  position: absolute;
+  top: 0;
+  left: -24%;
+  width: 24%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0));
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.roadmap-card:hover .roadmap-card-scanline,
+.roadmap-card:focus-visible .roadmap-card-scanline,
+.roadmap-card-active-mobile .roadmap-card-scanline {
+  opacity: 1;
+  animation: roadmapScan 2.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.roadmap-card-active-mobile::before {
+  opacity: 1;
+}
+
+.roadmap-status-pill {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.roadmap-progress {
+  position: relative;
+  height: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.roadmap-progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: block;
+  width: 0;
+  max-width: 100%;
+}
+
+.roadmap-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -18%;
+  width: 18%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0));
+  animation: roadmapProgressSweep 2.8s linear infinite;
+}
+
+.roadmap-progress-fill-blue {
+  background: rgba(59, 130, 246, 0.85);
+}
+
+.roadmap-progress-fill-red {
+  background: rgba(239, 68, 68, 0.82);
+}
+
+.roadmap-graph-stage {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 560ms cubic-bezier(0.16, 1, 0.3, 1), transform 560ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.roadmap-graph-stage-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.roadmap-graph-lines {
+  z-index: 0;
+}
+
+.roadmap-link {
+  stroke: rgba(255, 255, 255, 0.11);
+  stroke-width: 0.22;
+  transition: stroke 260ms ease, stroke-opacity 260ms ease, stroke-width 260ms ease;
+}
+
+.roadmap-link-active {
+  stroke: rgba(255, 255, 255, 0.22);
+}
+
+.roadmap-link-core {
+  stroke-opacity: 0.45;
+}
+
+.roadmap-link-core-active {
+  stroke-opacity: 0.95;
+  stroke-width: 0.3;
+}
+
+.roadmap-link-blue.roadmap-link-core-active {
+  stroke: rgba(59, 130, 246, 0.72);
+}
+
+.roadmap-link-red.roadmap-link-core-active {
+  stroke: rgba(239, 68, 68, 0.72);
+}
+
+.roadmap-core-node {
+  position: absolute;
+  z-index: 2;
+  width: 190px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(5, 5, 5, 0.9);
+  padding: 12px;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 6px 18px rgba(0, 0, 0, 0.46);
+}
+
+.roadmap-core-node::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08), transparent 62%);
+}
+
+.roadmap-core-led {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+  animation: roadmapCorePulse 1.9s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.roadmap-core-node-blue {
+  border-color: rgba(59, 130, 246, 0.42);
+}
+
+.roadmap-core-node-red {
+  border-color: rgba(239, 68, 68, 0.42);
+}
+
+.roadmap-core-node-linking {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 18px rgba(59, 130, 246, 0.22), 0 8px 20px rgba(0, 0, 0, 0.48);
+}
+
+.roadmap-core-led-blue {
+  background: rgba(59, 130, 246, 0.9);
+}
+
+.roadmap-core-led-red {
+  background: rgba(239, 68, 68, 0.9);
+}
+
+.roadmap-core-progress {
+  position: relative;
+  margin-top: 8px;
+  height: 3px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.roadmap-core-progress-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  transition: width 360ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.roadmap-core-progress-fill-blue {
+  background: rgba(59, 130, 246, 0.92);
+}
+
+.roadmap-core-progress-fill-red {
+  background: rgba(239, 68, 68, 0.9);
+}
+
+.roadmap-node {
+  position: absolute;
+  z-index: 2;
+  width: 220px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(5, 5, 5, 0.88);
+  padding: 10px 12px;
+  transform: translate(-50%, -50%);
+  text-align: left;
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), border-color 260ms ease, box-shadow 260ms ease,
+    background-color 260ms ease;
+  animation: roadmapNodeFloat 3.6s ease-in-out infinite;
+}
+
+.roadmap-node::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 90% 18%, rgba(255, 255, 255, 0.08), transparent 48%);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.roadmap-node::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -20%;
+  width: 20%;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0));
+  animation: roadmapScan 2.35s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  opacity: 0.52;
+}
+
+.roadmap-node:hover,
+.roadmap-node:focus-visible,
+.roadmap-node-active {
+  transform: translate(-50%, -50%) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.29);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.52);
+}
+
+.roadmap-node:hover::before,
+.roadmap-node:focus-visible::before,
+.roadmap-node-active::before {
+  opacity: 1;
+}
+
+.roadmap-node-blue.roadmap-node-active {
+  border-color: rgba(59, 130, 246, 0.58);
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.22), 0 10px 26px rgba(0, 0, 0, 0.5);
+}
+
+.roadmap-node-red.roadmap-node-active {
+  border-color: rgba(239, 68, 68, 0.58);
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.2), 0 10px 26px rgba(0, 0, 0, 0.5);
+}
+
+.roadmap-node-building::after {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0));
+  animation-duration: 1.95s;
+  opacity: 0.72;
+}
+
+.roadmap-focus-panel {
+  position: absolute;
+  inset: auto 16px 16px 16px;
+  z-index: 3;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(4, 4, 4, 0.95);
+  padding: 14px;
+}
+
+.roadmap-card-active-mobile {
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
 @keyframes projectScan {
   from {
     transform: translateX(0);
@@ -594,6 +942,46 @@ a {
   }
   50% {
     transform: translateY(-1.8px);
+  }
+}
+
+@keyframes roadmapScan {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(540%);
+  }
+}
+
+@keyframes roadmapProgressSweep {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(660%);
+  }
+}
+
+@keyframes roadmapNodeFloat {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-2px);
+  }
+}
+
+@keyframes roadmapCorePulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.22);
   }
 }
 
@@ -679,6 +1067,8 @@ a {
   .section-reveal,
   .section-reveal-visible,
   .cursor-blink,
+  .roadmap-graph-stage,
+  .roadmap-graph-stage-visible,
   .project-card-stage,
   .project-card-stage-visible,
   .skill-panel-stage,
@@ -699,6 +1089,13 @@ a {
   .skill-panel-scanline,
   .skill-marquee-track,
   .skill-logo-pill,
+  .roadmap-node,
+  .roadmap-node-building::after,
+  .roadmap-card-scanline,
+  .roadmap-card:hover .roadmap-card-scanline,
+  .roadmap-card:focus-visible .roadmap-card-scanline,
+  .roadmap-card-active-mobile .roadmap-card-scanline,
+  .roadmap-progress-fill::after,
   .about-rail::before,
   .about-card-visible::before,
   .about-shell::before {

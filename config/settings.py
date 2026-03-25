@@ -42,7 +42,7 @@ DEBUG = _env_bool("DJANGO_DEBUG", default=False)
 ALLOWED_HOSTS = _env_list("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,[::1]")
 CSRF_TRUSTED_ORIGINS = _env_list(
     "DJANGO_CSRF_TRUSTED_ORIGINS",
-    "http://localhost:8000,http://127.0.0.1:8000,http://localhost:5174,http://127.0.0.1:5174,https://cf54-188-113-216-185.ngrok-free.app",
+    "http://localhost:8000,http://127.0.0.1:8000,http://localhost:5173,http://127.0.0.1:5173",
 )
 CONTACT_ALLOWED_ORIGINS = {origin.rstrip("/") for origin in _env_list("DJANGO_CONTACT_ALLOWED_ORIGINS", ",".join(CSRF_TRUSTED_ORIGINS))}
 REDIS_URL = os.getenv("REDIS_URL", "").strip()

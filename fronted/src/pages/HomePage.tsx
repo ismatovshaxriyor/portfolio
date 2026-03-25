@@ -4,6 +4,7 @@ import About from '@/components/sections/About'
 import Contact from '@/components/sections/Contact'
 import Hero from '@/components/sections/Hero'
 import Projects from '@/components/sections/Projects'
+import Roadmap from '@/components/sections/Roadmap'
 import Skills from '@/components/sections/Skills'
 
 export default function HomePage() {
@@ -13,6 +14,7 @@ export default function HomePage() {
       <main>
         <Hero />
         <Projects />
+        <Roadmap />
         <Skills />
         <About />
         <Contact />

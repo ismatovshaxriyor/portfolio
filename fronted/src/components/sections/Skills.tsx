@@ -237,7 +237,7 @@ export default function Skills() {
       <div className={cn('section-reveal', visible && 'section-reveal-visible')}>
         <header className="mb-10">
           <p className="mb-2 text-[11px] uppercase tracking-[0.3em] text-white/45">
-            <ScrambleHoverText text="/* 02. SKILLS */" />
+            <ScrambleHoverText text="/* 03. SKILLS */" />
           </p>
           <div className="h-px w-20 bg-white/25" />
         </header>
