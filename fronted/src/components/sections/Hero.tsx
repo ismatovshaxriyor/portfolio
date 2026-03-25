@@ -83,7 +83,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-[100svh] items-start overflow-hidden border-b border-white/10 bg-black pt-24 sm:min-h-screen sm:items-center sm:pt-24"
+      className="relative flex min-h-[100svh] items-center overflow-hidden border-b border-white/10 bg-black pt-20 sm:min-h-screen sm:pt-24"
     >
       <canvas ref={canvasRef} className="gpu-layer pointer-events-none absolute inset-0 z-0 opacity-60" />
       <div className="scanline-overlay gpu-layer" aria-hidden="true" />
@@ -122,7 +122,7 @@ export default function Hero() {
         <p>{runtimeWorkers}</p>
       </div>
 
-      <div className="site-shell relative z-20 mt-3 sm:-mt-6 md:-mt-10">
+      <div className="site-shell relative z-20 -mt-2 sm:-mt-6 md:-mt-10">
         <div className="max-w-3xl pl-0 sm:pl-4 md:pl-6">
           <p className="mb-4 inline-flex border border-white/20 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-white/60 sm:tracking-[0.24em]">
             <ScrambleHoverText text="backend engineer aesthetic" />
