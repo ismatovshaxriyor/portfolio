@@ -130,7 +130,7 @@ export const ROADMAP_STAGES: readonly RoadmapStage[] = [
 ]
 
 export const ABOUT_TEXT: readonly string[] = [
-  "My name is Shaxriyor, and I'm 19 years old. I am a junior-level backend developer who can build websites and Telegram bots.",
+  'My name is Shaxriyor. I am {{age}}, and I am a junior-level backend developer who can build websites and Telegram bots.',
   'I am currently studying Artificial Intelligence at the National University of Uzbekistan, and I am working hard to take on bigger projects in the future.'
 ]
 
