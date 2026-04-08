@@ -25,6 +25,7 @@ class ProjectAdmin(admin.ModelAdmin):
         "description",
         "architecture",
         "api_hint",
+        "project_url",
         "cover_upload",
         "cover_image",
         "signal",

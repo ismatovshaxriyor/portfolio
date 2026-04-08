@@ -17,6 +17,22 @@ function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null
 }
 
+function normalizeProjectUrl(value: string): string {
+  const raw = value.trim()
+  if (!raw) {
+    return ''
+  }
+  try {
+    const parsed = new URL(raw)
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+      return ''
+    }
+    return parsed.toString()
+  } catch {
+    return ''
+  }
+}
+
 function normalizeProject(entry: unknown): Project | null {
   if (!isObject(entry)) {
     return null
@@ -28,6 +44,7 @@ function normalizeProject(entry: unknown): Project | null {
   const description = typeof entry.description === 'string' ? entry.description.trim() : ''
   const architecture = typeof entry.architecture === 'string' ? entry.architecture.trim() : ''
   const apiHint = typeof entry.apiHint === 'string' ? entry.apiHint.trim() : ''
+  const projectUrl = typeof entry.projectUrl === 'string' ? normalizeProjectUrl(entry.projectUrl) : ''
   const coverImage = typeof entry.coverImage === 'string' ? entry.coverImage.trim() : ''
   const signal = entry.signal === 'red' ? 'red' : entry.signal === 'blue' ? 'blue' : null
   const rawTechStack =
@@ -47,6 +64,7 @@ function normalizeProject(entry: unknown): Project | null {
     description,
     architecture,
     apiHint,
+    projectUrl,
     coverImage,
     signal,
     techStack
@@ -221,7 +239,20 @@ export default function Projects() {
                     </div>
 
                     <span className="inline-flex h-8 w-8 items-center justify-center self-end border border-white/20 text-white/70 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-white group-hover:text-white sm:self-auto">
-                      <IconArrowUpRight size={14} />
+                      {project.projectUrl ? (
+                        <a
+                          href={project.projectUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={(event) => event.stopPropagation()}
+                          className="inline-flex h-8 w-8 items-center justify-center"
+                          aria-label={`Open ${project.title} link`}
+                        >
+                          <IconArrowUpRight size={14} />
+                        </a>
+                      ) : (
+                        <IconArrowUpRight size={14} />
+                      )}
                     </span>
                   </div>
                 </Card>
@@ -265,6 +296,20 @@ export default function Projects() {
                   ))}
                 </div>
               </section>
+
+              {activeProject.projectUrl ? (
+                <section>
+                  <a
+                    href={activeProject.projectUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 border border-white/20 px-3 py-2 text-xs uppercase tracking-[0.18em] text-white/75 transition-colors duration-300 hover:border-white/45 hover:text-white"
+                  >
+                    <ScrambleHoverText text="Open Project" playOnMount={false} />
+                    <IconArrowUpRight size={14} />
+                  </a>
+                </section>
+              ) : null}
             </div>
 
             <div className="space-y-5">

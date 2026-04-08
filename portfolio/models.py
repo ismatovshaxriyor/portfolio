@@ -37,6 +37,7 @@ class Project(models.Model):
     description = models.TextField()
     architecture = models.TextField()
     api_hint = models.CharField(max_length=160)
+    project_url = models.URLField(blank=True, default="", help_text="Public link for visiting this project.")
     cover_image = models.CharField(max_length=255, blank=True, default="", help_text="Fallback static path, e.g. /static/images/img.png")
     cover_upload = models.FileField(
         upload_to=project_cover_upload_to,

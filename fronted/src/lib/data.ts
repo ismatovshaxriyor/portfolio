@@ -32,6 +32,7 @@ export const PROJECTS: readonly Project[] = [
     architecture:
       'Layered service architecture with queue-backed workloads. Redis powers hot-path caching and rate-safe task distribution while PostgreSQL handles transactional domain state.',
     apiHint: 'GET /projects/marketplace-bot',
+    projectUrl: 'https://github.com/ismatovshaxriyor',
     coverImage: '/static/images/img.png',
     signal: 'blue'
   },
@@ -45,6 +46,7 @@ export const PROJECTS: readonly Project[] = [
     architecture:
       'Read-heavy architecture with indexed search and cache-first routing. Media metadata and lookup keys are partitioned to protect command-response latency.',
     apiHint: 'GET /projects/movie-download-bot',
+    projectUrl: 'https://github.com/ismatovshaxriyor',
     coverImage: '/static/images/img_1.png',
     signal: 'red'
   },
@@ -58,6 +60,7 @@ export const PROJECTS: readonly Project[] = [
     architecture:
       'Event-driven core with Redis pub/sub as broadcast fabric. HTTP APIs provide durable history while socket workers handle transient realtime state.',
     apiHint: 'GET /projects/realtime-chat-api',
+    projectUrl: 'https://github.com/ismatovshaxriyor',
     coverImage: '/static/images/profile.png',
     signal: 'blue'
   },
@@ -71,6 +74,7 @@ export const PROJECTS: readonly Project[] = [
     architecture:
       'Clean module boundaries, explicit service/use-case layers, and environment-driven configuration for consistent behavior from local development to production.',
     apiHint: 'GET /projects/drf-boilerplate',
+    projectUrl: 'https://github.com/ismatovshaxriyor',
     coverImage: '/static/images/ismtov.png',
     signal: 'red'
   }
