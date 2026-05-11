@@ -28,6 +28,8 @@ SSH_ACCEPTED_RE = re.compile(
 )
 
 
+
+
 @dataclass
 class CheckResult:
     name: str
