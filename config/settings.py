@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'portfolio',
+    'server_monitor',
 ]
 
 MIDDLEWARE = [
@@ -192,6 +193,30 @@ else:
             "TIMEOUT": 300,
         }
     }
+
+SERVER_MONITOR = {
+    "ENABLED": _env_bool("SERVER_MONITOR_ENABLED", default=True),
+    "CHECK_INTERVAL_SECONDS": _env_int("SERVER_MONITOR_INTERVAL_SECONDS", 30),
+    "STATE_FILE": os.getenv("SERVER_MONITOR_STATE_FILE", str(BASE_DIR / ".server_monitor_state.json")),
+    "WATCH_FILES": _env_list(
+        "SERVER_MONITOR_WATCH_FILES",
+        ".env,config/settings.py,docker-compose.yml",
+    ),
+    "CRITICAL_PATHS": _env_list(
+        "SERVER_MONITOR_CRITICAL_PATHS",
+        ".env,manage.py,config/settings.py",
+    ),
+    "GIT_WATCH_ENABLED": _env_bool("SERVER_MONITOR_GIT_WATCH_ENABLED", default=True),
+    "DOCKER_ENABLED": _env_bool("SERVER_MONITOR_DOCKER_ENABLED", default=False),
+    "DOCKER_CONTAINER_NAMES": _env_list("SERVER_MONITOR_DOCKER_CONTAINER_NAMES", ""),
+    "SSH_LOG_PATHS": _env_list("SERVER_MONITOR_SSH_LOG_PATHS", "/var/log/auth.log,/var/log/secure"),
+    "SSH_SCAN_LINES": _env_int("SERVER_MONITOR_SSH_SCAN_LINES", 300),
+    "HEALTH_TOKEN": str(os.getenv("SERVER_MONITOR_HEALTH_TOKEN", "")).strip(),
+    "TELEGRAM_BOT_TOKEN": str(os.getenv("SERVER_MONITOR_TELEGRAM_BOT_TOKEN", "")).strip(),
+    "TELEGRAM_CHAT_ID": str(os.getenv("SERVER_MONITOR_TELEGRAM_CHAT_ID", "")).strip(),
+    "WEBHOOK_URL": str(os.getenv("SERVER_MONITOR_WEBHOOK_URL", "")).strip(),
+    "NOTIFIER_TIMEOUT_SECONDS": _env_int("SERVER_MONITOR_NOTIFIER_TIMEOUT_SECONDS", 8),
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

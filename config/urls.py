@@ -5,6 +5,7 @@ from django.templatetags.static import static as static_file
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include("server_monitor.urls")),
     path('', include("portfolio.urls")),
     path('favicon.ico', RedirectView.as_view(url=static_file('images/favicon.ico')), name='favicon'),
     path('favicon.ico/', RedirectView.as_view(url=static_file('images/favicon.ico'))),
