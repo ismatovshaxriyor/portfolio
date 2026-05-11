@@ -75,5 +75,9 @@ SERVER_MONITOR_SSH_LOG_PATHS=/var/log/auth.log,/var/log/secure
 SERVER_MONITOR_HEALTH_TOKEN=
 SERVER_MONITOR_TELEGRAM_BOT_TOKEN=
 SERVER_MONITOR_TELEGRAM_CHAT_ID=
+SERVER_MONITOR_TELEGRAM_HEALTH_BUTTON_URL=https://your-domain.com/api/server-monitor/health/
+SERVER_MONITOR_TELEGRAM_HEALTH_BUTTON_TEXT=Health
 SERVER_MONITOR_WEBHOOK_URL=
 ```
+
+`SERVER_MONITOR_TELEGRAM_HEALTH_BUTTON_URL` berilsa, Telegram alert xabarida inline tugma chiqadi. Agar `SERVER_MONITOR_HEALTH_TOKEN` to'ldirilgan bo'lsa, `token` query param avtomatik qo'shiladi.

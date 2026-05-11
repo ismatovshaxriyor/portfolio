@@ -5,6 +5,7 @@ import logging
 from datetime import datetime, timezone
 from typing import Protocol
 from urllib.error import URLError
+from urllib.parse import parse_qs, urlencode, urlsplit, urlunsplit
 from urllib.request import Request, urlopen
 
 logger = logging.getLogger(__name__)
@@ -22,10 +23,19 @@ class LoggingNotifier:
 
 
 class TelegramNotifier:
-    def __init__(self, token: str, chat_id: str, timeout_seconds: int = 8) -> None:
+    def __init__(
+        self,
+        token: str,
+        chat_id: str,
+        timeout_seconds: int = 8,
+        health_button_url: str = "",
+        health_button_text: str = "Health",
+    ) -> None:
         self.api_url = f"https://api.telegram.org/bot{token}/sendMessage"
         self.chat_id = chat_id
         self.timeout_seconds = timeout_seconds
+        self.health_button_url = health_button_url
+        self.health_button_text = health_button_text
 
     def send(self, title: str, message: str, severity: str) -> bool:
         text = f"[{severity.upper()}] {title}\n{message}"
@@ -34,6 +44,17 @@ class TelegramNotifier:
             "text": text,
             "disable_web_page_preview": True,
         }
+        if self.health_button_url:
+            payload["reply_markup"] = {
+                "inline_keyboard": [
+                    [
+                        {
+                            "text": self.health_button_text,
+                            "url": self.health_button_url,
+                        }
+                    ]
+                ]
+            }
         request = Request(
             self.api_url,
             data=json.dumps(payload).encode("utf-8"),
@@ -90,14 +111,38 @@ class CompositeNotifier:
 
 
 def build_notifier(config: dict) -> Notifier:
+    def _build_health_button_url(url: str, token: str) -> str:
+        if not url:
+            return ""
+        if not token:
+            return url
+
+        parts = urlsplit(url)
+        query = parse_qs(parts.query, keep_blank_values=True)
+        if "token" not in query:
+            query["token"] = [token]
+        encoded_query = urlencode(query, doseq=True)
+        return urlunsplit((parts.scheme, parts.netloc, parts.path, encoded_query, parts.fragment))
+
     token = str(config.get("TELEGRAM_BOT_TOKEN", "")).strip()
     chat_id = str(config.get("TELEGRAM_CHAT_ID", "")).strip()
+    health_token = str(config.get("HEALTH_TOKEN", "")).strip()
+    health_button_url = str(config.get("TELEGRAM_HEALTH_BUTTON_URL", "")).strip()
+    health_button_text = str(config.get("TELEGRAM_HEALTH_BUTTON_TEXT", "Health")).strip() or "Health"
     webhook_url = str(config.get("WEBHOOK_URL", "")).strip()
     timeout = int(config.get("NOTIFIER_TIMEOUT_SECONDS", 8) or 8)
 
     notifiers: list[Notifier] = []
     if token and chat_id:
-        notifiers.append(TelegramNotifier(token=token, chat_id=chat_id, timeout_seconds=timeout))
+        notifiers.append(
+            TelegramNotifier(
+                token=token,
+                chat_id=chat_id,
+                timeout_seconds=timeout,
+                health_button_url=_build_health_button_url(health_button_url, health_token),
+                health_button_text=health_button_text,
+            )
+        )
     if webhook_url:
         notifiers.append(WebhookNotifier(url=webhook_url, timeout_seconds=timeout))
 
