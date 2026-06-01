@@ -17,12 +17,12 @@ function normalizePath(pathname: string): string {
 }
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true)
-
   const isNotFound = useMemo(() => {
     const path = normalizePath(window.location.pathname)
     return path !== '/' && path !== '/index.html'
   }, [])
+
+  const [isLoading, setIsLoading] = useState(!isNotFound)
 
   if (isLoading) {
     return <LoadingPage onContinue={() => setIsLoading(false)} />

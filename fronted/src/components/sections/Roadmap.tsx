@@ -162,7 +162,7 @@ export default function Roadmap() {
                       'roadmap-core-progress-fill',
                       activeStage.signal === 'red' ? 'roadmap-core-progress-fill-red' : 'roadmap-core-progress-fill-blue'
                     )}
-                    style={{ width: `${clampProgress(activeStage.completion)}%` }}
+                    style={{ '--progress-scale': clampProgress(activeStage.completion) / 100 } as React.CSSProperties}
                   />
                 </div>
               </div>
@@ -241,7 +241,7 @@ export default function Roadmap() {
                         'roadmap-progress-fill',
                         activeStage.signal === 'blue' ? 'roadmap-progress-fill-blue' : 'roadmap-progress-fill-red'
                       )}
-                      style={{ width: `${clampProgress(activeStage.completion)}%` }}
+                      style={{ '--progress-scale': clampProgress(activeStage.completion) / 100 } as React.CSSProperties}
                     />
                   </div>
                 </div>

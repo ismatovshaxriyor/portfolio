@@ -122,8 +122,8 @@ export default function LoadingPage({ onContinue }: LoadingPageProps) {
 
         <div className="mt-6 h-2 w-full overflow-hidden border border-white/20 bg-[#050505]">
           <span
-            className="block h-full bg-white transition-[width] duration-150 ease-linear"
-            style={{ width: `${progress}%` }}
+            className="block h-full w-full origin-left bg-white transition-transform duration-150 ease-linear"
+            style={{ transform: `scaleX(${progress / 100})`, willChange: 'transform' }}
           />
         </div>
 
