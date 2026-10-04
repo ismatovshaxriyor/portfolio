@@ -6,7 +6,8 @@ Runs on `main_bots_server` in `/root/portfolio`:
     docker-compose.yml   from deploy/
     nginx/default.conf   from deploy/nginx/
     app/                 this repo (see .dockerignore for what stays out)
-    sites/main/          fronted/dist          -> ismatov.uz
+    build/fronted/       fronted/, built there in a node container
+    sites/main/          its dist              -> ismatov.uz
     sites/beta/          portfolio_3d's dist   -> beta.ismatov.uz
 
 Traffic: Cloudflare -> the bots' Caddy (`/root/bots/oddiy_test_bot`, which owns

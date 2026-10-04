@@ -6,10 +6,15 @@ set -eu
 HOST=${1:-main_bots_server}
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 
-(cd "$ROOT/fronted" && npm run build)
 rsync -az --delete --exclude-from="$ROOT/.dockerignore" "$ROOT/" "$HOST:/root/portfolio/app/"
-# Hashed assets are not deleted: a visitor mid-session may still load an old chunk.
-rsync -az "$ROOT/fronted/dist/" "$HOST:/root/portfolio/sites/main/"
+# The frontend is built on the server, in a node container: npm in this iCloud
+# checkout stalls on evicted node_modules files. Hashed assets in sites/main
+# are not deleted, since a visitor mid-session may still load an old chunk.
+ssh "$HOST" 'mkdir -p /root/portfolio/build/fronted'
+rsync -az --delete --exclude node_modules --exclude dist --exclude .vite-cache \
+  "$ROOT/fronted/" "$HOST:/root/portfolio/build/fronted/"
+ssh "$HOST" 'cd /root/portfolio/build/fronted && docker run --rm -v "$PWD":/app -w /app node:20-alpine \
+  sh -c "npm ci --no-audit --no-fund --loglevel=error && npm run build" && cp -a dist/. ../../sites/main/'
 rsync -az "$ROOT/deploy/docker-compose.yml" "$HOST:/root/portfolio/"
 rsync -az --delete "$ROOT/deploy/nginx/" "$HOST:/root/portfolio/nginx/"
 # chmod: nginx workers are not root, and files from this (iCloud) checkout are
