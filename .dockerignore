@@ -1,0 +1,11 @@
+.git
+.env
+.venv
+.claude
+CLAUDE.md
+db.sqlite3
+staticfiles
+fronted
+deploy
+**/__pycache__
+.server_monitor_state.json

@@ -1,0 +1,63 @@
+# Production stack in /root/portfolio on the server: the Django API and admin,
+# Postgres, a Redis cache, and an nginx that serves ismatov.uz and
+# beta.ismatov.uz. TLS ends at the bots' Caddy, which reaches nginx over the
+# bots' Docker network (see deploy/README.md).
+name: portfolio
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Cache for the public API and the contact form's per-IP limits; nothing in
+  # it needs to survive a restart.
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--save", "", "--appendonly", "no", "--maxmemory", "64mb", "--maxmemory-policy", "allkeys-lru"]
+
+  web:
+    build: ./app
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DJANGO_DATABASE: postgres
+      POSTGRES_HOST: db
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: portfolio-nginx
+    restart: unless-stopped
+    volumes:
+      # Directories, not single files: rsync replaces files, and a single-file
+      # bind mount would keep showing the old one.
+      - ./nginx:/etc/nginx/conf.d:ro
+      - ./sites/main:/srv/main:ro
+      - ./sites/beta:/srv/beta:ro
+    depends_on:
+      - web
+    networks:
+      - default
+      - edge
+
+networks:
+  edge:
+    external: true
+    name: oddiy_test_bot_default
+
+volumes:
+  db_data:
