@@ -17,6 +17,28 @@ services:
       timeout: 5s
       retries: 5
 
+  # A pg_dump into ./backups at start and then daily; 14 days are kept.
+  backup:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PGHOST: db
+    volumes:
+      - ./backups:/backups
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint:
+      - sh
+      - -c
+      - >-
+        while true; do
+        PGPASSWORD="$$POSTGRES_PASSWORD" pg_dump -U "$$POSTGRES_USER" "$$POSTGRES_DB" | gzip > "/backups/portfolio-$$(date +%F).sql.gz";
+        find /backups -name 'portfolio-*.sql.gz' -mtime +14 -delete;
+        sleep 86400;
+        done
+
   # Cache for the public API and the contact form's per-IP limits; nothing in
   # it needs to survive a restart.
   redis:

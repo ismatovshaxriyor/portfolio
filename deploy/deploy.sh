@@ -12,4 +12,6 @@ rsync -az --delete --exclude-from="$ROOT/.dockerignore" "$ROOT/" "$HOST:/root/po
 rsync -az "$ROOT/fronted/dist/" "$HOST:/root/portfolio/sites/main/"
 rsync -az "$ROOT/deploy/docker-compose.yml" "$HOST:/root/portfolio/"
 rsync -az --delete "$ROOT/deploy/nginx/" "$HOST:/root/portfolio/nginx/"
-ssh "$HOST" 'cd /root/portfolio && docker compose up -d --build && docker compose exec -T nginx nginx -s reload'
+# chmod: nginx workers are not root, and files from this (iCloud) checkout are
+# often 700/600 (macOS's openrsync has no --chmod).
+ssh "$HOST" 'cd /root/portfolio && chmod -R u=rwX,go=rX sites nginx && docker compose up -d --build && docker compose exec -T nginx nginx -s reload'

@@ -22,4 +22,4 @@ network is ever recreated, restart this stack so nginx joins it again.
 - Deploy the beta: `npm run deploy:beta` in portfolio_3d
 - Admin user: `ssh main_bots_server 'cd /root/portfolio && docker compose exec web python manage.py createsuperuser'`
 - Logs: `docker compose logs -f web nginx`
-- Backups: a daily `pg_dump` into `/root/portfolio/backups` (root's crontab, 14 days kept)
+- Backups: the `backup` service writes a `pg_dump` into `/root/portfolio/backups` daily (14 days kept)
