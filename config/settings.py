@@ -259,6 +259,7 @@ REST_FRAMEWORK = {
         "health": "13/min",
         "public": "90/min",
         "contact": "10/min",
+        "feedback": "10/min",
     },
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",

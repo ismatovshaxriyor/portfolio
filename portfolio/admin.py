@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .cache_keys import invalidate_public_content_cache
-from .models import ContactMessage, Project, SkillGroup
+from .models import ContactMessage, Feedback, Project, SkillGroup
 
 
 @admin.register(ContactMessage)
@@ -9,6 +9,22 @@ class ContactMessageAdmin(admin.ModelAdmin):
     list_filter = ("is_spam", "created_at")
     search_fields = ("name", "email", "phone", "message")
     readonly_fields = ("created_at",)
+
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ("created_at", "rating", "short_message", "contact", "page")
+    list_filter = ("rating", "created_at")
+    search_fields = ("message", "contact")
+    # What visitors sent is kept as sent.
+    readonly_fields = ("rating", "message", "contact", "page", "client", "ip_address", "user_agent", "created_at")
+
+    @admin.display(description="Message")
+    def short_message(self, obj):
+        return obj.message if len(obj.message) <= 80 else f"{obj.message[:80]}…"
+
+    def has_add_permission(self, request):
+        return False
 
 
 @admin.register(Project)

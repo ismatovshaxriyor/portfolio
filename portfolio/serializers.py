@@ -1,3 +1,4 @@
+import json
 import re
 
 from rest_framework import serializers
@@ -6,6 +7,7 @@ from .models import Project, SkillGroup
 
 PHONE_DIGIT_RE = re.compile(r"\D+")
 MESSAGE_MIN_LENGTH = 5
+FEEDBACK_CLIENT_MAX_BYTES = 2048
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -54,3 +56,23 @@ class ContactMessageInputSerializer(serializers.Serializer):
         if len(digits) < 7 or len(digits) > 16:
             raise serializers.ValidationError("phone format is invalid.")
         return value
+
+
+class FeedbackInputSerializer(serializers.Serializer):
+    rating = serializers.IntegerField(min_value=1, max_value=5, required=False, allow_null=True)
+    message = serializers.CharField(max_length=2000, required=False, allow_blank=True, trim_whitespace=True)
+    contact = serializers.CharField(max_length=120, required=False, allow_blank=True, trim_whitespace=True)
+    page = serializers.URLField(required=False, allow_blank=True)
+    client = serializers.DictField(required=False)
+    website = serializers.CharField(required=False, allow_blank=True)
+    client_elapsed_ms = serializers.IntegerField(required=False, min_value=0)
+
+    def validate_client(self, value):
+        if len(json.dumps(value, default=str)) > FEEDBACK_CLIENT_MAX_BYTES:
+            raise serializers.ValidationError("client info is too large.")
+        return value
+
+    def validate(self, attrs):
+        if attrs.get("rating") is None and not attrs.get("message"):
+            raise serializers.ValidationError("Send a rating or a message.")
+        return attrs

@@ -11,10 +11,17 @@ from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
 
 from .cache_keys import PROJECT_LIST_CACHE_KEY, SKILL_GROUP_LIST_CACHE_KEY
-from .models import ContactMessage, Project, SkillGroup
-from .serializers import ContactMessageInputSerializer, ProjectSerializer, SkillGroupSerializer
+from .models import ContactMessage, Feedback, Project, SkillGroup
+from .serializers import (
+    ContactMessageInputSerializer,
+    FeedbackInputSerializer,
+    ProjectSerializer,
+    SkillGroupSerializer,
+)
 
 MIN_FILL_MS = 2500
+# The feedback form is shorter: a rating alone takes a second or two.
+FEEDBACK_MIN_FILL_MS = 1500
 IP_BURST_COOLDOWN_SECONDS = 25
 IP_WINDOW_SECONDS = 600
 IP_WINDOW_LIMIT = 6
@@ -39,13 +46,14 @@ def _client_ip(request) -> str:
         return "0.0.0.0"
 
 
-def _rate_limited(ip: str) -> bool:
-    cooldown_key = f"contact:cooldown:{ip}"
+def _rate_limited(ip: str, scope: str = "contact") -> bool:
+    # Per scope, so feedback sent a moment ago never blocks a contact message.
+    cooldown_key = f"{scope}:cooldown:{ip}"
     try:
         if cache.get(cooldown_key):
             return True
 
-        window_key = f"contact:window:{ip}"
+        window_key = f"{scope}:window:{ip}"
         count = cache.get(window_key, 0)
         if count >= IP_WINDOW_LIMIT:
             return True
@@ -199,3 +207,59 @@ class ContactCreateAPIView(APIView):
         )
 
         return Response({"success": True, "message": "Message has been queued."}, status=status.HTTP_201_CREATED)
+
+
+class FeedbackCreateAPIView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+    parser_classes = [JSONParser]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "feedback"
+    http_method_names = ["post", "options"]
+
+    def post(self, request):
+        if not _origin_allowed(request):
+            return Response(
+                {"success": False, "message": "Origin is not allowed."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        # A filled honeypot or an instant submit is a bot: it gets a fake
+        # success and nothing is stored.
+        if str(request.data.get("website", "")).strip():
+            return Response({"success": True, "message": "Accepted."}, status=status.HTTP_200_OK)
+        try:
+            elapsed_ms = int(request.data.get("client_elapsed_ms", FEEDBACK_MIN_FILL_MS))
+        except (TypeError, ValueError):
+            elapsed_ms = FEEDBACK_MIN_FILL_MS
+        if elapsed_ms < FEEDBACK_MIN_FILL_MS:
+            return Response({"success": True, "message": "Accepted."}, status=status.HTTP_200_OK)
+
+        # Validated before the per-IP limit, so a visitor who fixes a rejected
+        # form can send it again right away.
+        serializer = FeedbackInputSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(
+                {"success": False, "errors": serializer.errors, "message": "Validation failed."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        ip_address = _client_ip(request)
+        if _rate_limited(ip_address, scope="feedback"):
+            return Response(
+                {"success": False, "message": "Too many requests. Try again in a moment."},
+                status=status.HTTP_429_TOO_MANY_REQUESTS,
+            )
+
+        payload = serializer.validated_data
+        Feedback.objects.create(
+            rating=payload.get("rating"),
+            message=payload.get("message", ""),
+            contact=payload.get("contact", ""),
+            page=payload.get("page", ""),
+            client=payload.get("client", {}),
+            ip_address=ip_address,
+            user_agent=str(request.META.get("HTTP_USER_AGENT", ""))[:255],
+        )
+        return Response({"success": True, "message": "Feedback saved."}, status=status.HTTP_201_CREATED)
+

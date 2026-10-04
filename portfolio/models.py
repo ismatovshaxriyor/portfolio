@@ -26,6 +26,27 @@ class ContactMessage(models.Model):
         return self.name
 
 
+class Feedback(models.Model):
+    """A beta visitor's rating and notes, plus what their browser reported."""
+
+    rating = models.PositiveSmallIntegerField(blank=True, null=True)
+    message = models.TextField(blank=True)
+    contact = models.CharField(max_length=120, blank=True)
+    page = models.URLField(blank=True)
+    # Browser, screen, GPU and frame rate, as sent by the beta's feedback form.
+    client = models.JSONField(default=dict, blank=True)
+    ip_address = models.GenericIPAddressField(blank=True, null=True)
+    user_agent = models.CharField(max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name_plural = "feedback"
+
+    def __str__(self):
+        return f"{self.rating}/5" if self.rating else f"Feedback #{self.pk}"
+
+
 class Project(models.Model):
     class Signal(models.TextChoices):
         BLUE = "blue", "Blue"
