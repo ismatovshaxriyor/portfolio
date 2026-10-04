@@ -1205,7 +1205,7 @@ a {
   }
 }
 
-/* Beta invitation card: slides up once, after the hero has settled. */
+/* Beta invitation card: slides up once, when the visitor scrolls past the hero. */
 .beta-invite {
   animation: betaInviteIn 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }

@@ -3,8 +3,9 @@ import { IconArrowUpRight, IconClose } from '@/components/icons'
 
 const BETA_URL = 'https://beta.ismatov.uz'
 const DISMISSED_KEY = 'portfolio:beta-invite-dismissed'
-// The card slides in once the hero has settled, not on top of the reveal.
-const SHOW_DELAY_MS = 2500
+// Shown once the visitor scrolls past most of the hero: on the hero itself the
+// card would sit on its call-to-action buttons on shorter screens.
+const SHOW_AFTER_SCROLL_RATIO = 0.6
 
 function wasDismissed(): boolean {
   try {
@@ -24,8 +25,16 @@ export default function BetaInvite() {
     if (wasDismissed()) {
       return
     }
-    const timer = window.setTimeout(() => setVisible(true), SHOW_DELAY_MS)
-    return () => window.clearTimeout(timer)
+    const check = () => {
+      if (window.scrollY > window.innerHeight * SHOW_AFTER_SCROLL_RATIO) {
+        setVisible(true)
+        window.removeEventListener('scroll', check)
+      }
+    }
+    window.addEventListener('scroll', check, { passive: true })
+    // A reload or an anchor link can land below the hero already.
+    check()
+    return () => window.removeEventListener('scroll', check)
   }, [])
 
   const dismiss = () => {
