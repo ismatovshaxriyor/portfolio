@@ -28,6 +28,39 @@ IP_WINDOW_LIMIT = 6
 PROJECTS_CACHE_TTL_SECONDS = getattr(settings, "PROJECTS_API_CACHE_TTL", 300)
 SKILLS_CACHE_TTL_SECONDS = getattr(settings, "SKILLS_API_CACHE_TTL", 300)
 
+# Request headers /api/whoami/ shows back to the visitor, as their browser sent
+# them. A fixed list: never Cookie or Authorization, and nothing a proxy adds
+# or rewrites on the way in (Accept-Encoding, X-Forwarded-*).
+WHOAMI_HEADERS = (
+    "User-Agent",
+    "Accept-Language",
+    "Referer",
+    "DNT",
+    "Sec-GPC",
+    "Sec-CH-UA",
+    "Sec-CH-UA-Mobile",
+    "Sec-CH-UA-Platform",
+    "Sec-Fetch-Site",
+    "Sec-Fetch-Mode",
+    "Sec-Fetch-Dest",
+    "Save-Data",
+    "Priority",
+)
+WHOAMI_HEADER_MAX_CHARS = 400
+# Where Cloudflare places the visitor's address. CF-IPCountry always comes;
+# the rest only with the "Add visitor location headers" managed transform.
+WHOAMI_GEO_HEADERS = {
+    "country": "CF-IPCountry",
+    "city": "CF-IPCity",
+    "region": "CF-Region",
+    "region_code": "CF-Region-Code",
+    "postal_code": "CF-Postal-Code",
+    "latitude": "CF-IPLatitude",
+    "longitude": "CF-IPLongitude",
+    "timezone": "CF-Timezone",
+    "continent": "CF-IPContinent",
+}
+
 
 def _client_ip(request) -> str:
     xff = request.META.get("HTTP_X_FORWARDED_FOR", "")
@@ -80,6 +113,14 @@ def _cache_set(key: str, value, timeout: int) -> None:
         return
 
 
+def _header_text(value: str) -> str:
+    # WSGI hands header bytes over as latin-1; city names arrive as UTF-8.
+    try:
+        return value.encode("latin-1").decode("utf-8").strip()
+    except UnicodeError:
+        return value.strip()
+
+
 def _origin_allowed(request) -> bool:
     origin = str(request.headers.get("Origin", "")).strip().rstrip("/")
     if not origin:
@@ -96,6 +137,47 @@ class HealthAPIView(APIView):
 
     def get(self, _request):
         return Response({"status": "ok", "time": timezone.now().isoformat()})
+
+
+class WhoAmIAPIView(APIView):
+    """What this server saw of the request, for the visitor to look at.
+
+    The beta's Danger zone shows a visitor what a site learns about them; the
+    address and its location are the part only a server can see. Nothing is
+    kept: the answer is built from the request headers alone, with no database
+    or cache access, and must never be stored by a proxy either.
+    """
+
+    permission_classes = [AllowAny]
+    authentication_classes = []
+    # No throttle on purpose: DRF's keep every caller's address in the cache
+    # for the length of their window, and this endpoint promises to keep none.
+    throttle_classes = []
+    http_method_names = ["get", "head", "options"]
+
+    def get(self, request):
+        ip = _client_ip(request)
+        geo = {key: _header_text(request.headers.get(name, "")) for key, name in WHOAMI_GEO_HEADERS.items()}
+        # Cloudflare's code for "no idea where this address is".
+        if geo["country"].upper() == "XX":
+            geo["country"] = ""
+        ray = request.headers.get("CF-Ray", "")
+        response = Response(
+            {
+                "ip": ip,
+                "ip_version": ipaddress.ip_address(ip).version,
+                "geo": {key: value for key, value in geo.items() if value},
+                # A ray id ends in the code of the data centre that took the request.
+                "edge": {"colo": ray.rsplit("-", 1)[1] if "-" in ray else ""},
+                "headers": {
+                    name: _header_text(request.headers[name])[:WHOAMI_HEADER_MAX_CHARS]
+                    for name in WHOAMI_HEADERS
+                    if name in request.headers
+                },
+            }
+        )
+        response["Cache-Control"] = "no-store, private"
+        return response
 
 
 class ProjectListAPIView(APIView):
